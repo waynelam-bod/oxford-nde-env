@@ -1,5 +1,4 @@
-import {ApplicationRef, DoBootstrap, Injector, ModuleWithProviders, NgModule} from '@angular/core';
-console.log('[AppModule] Top of app.module.ts loaded');
+import {ApplicationRef, DoBootstrap, Injector, NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {AppComponent} from './app.component';
 import { RecordMessageComponent } from './oxford/record-message/record-message.component';
@@ -11,8 +10,11 @@ import {TranslateModule} from "@ngx-translate/core";
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { AutoAssetSrcDirective } from './services/auto-asset-src.directive';
+import {SHELL_ROUTER} from "./injection-tokens";
 
-export const AppModule = ({providers}: {providers:any}) => {
+
+
+export const AppModule = ({providers, shellRouter}: {providers:any, shellRouter: Router}) => {
    @NgModule({
     declarations: [
       AppComponent,
@@ -27,7 +29,7 @@ export const AppModule = ({providers}: {providers:any}) => {
       StoreModule.forRoot({}),
       RecordMessageComponent
     ],
-    providers: providers,
+    providers: [...providers, {provide: SHELL_ROUTER, useValue: shellRouter}],
     bootstrap: []
   })
   class AppModule implements DoBootstrap {
