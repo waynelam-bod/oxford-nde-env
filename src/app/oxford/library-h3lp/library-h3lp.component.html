@@ -1,0 +1,7 @@
+<aside id="help-block" tabindex="-1" [style.right]="showChatWidget ? '0' : '-240px'">
+  <div class="live-chat-text"><button id="help-trigger" class="close-help" tabindex="0" (click)="toggle()">
+    <mat-icon> chat</mat-icon>
+    {{ config.prompt }}
+  </button></div>
+  <iframe class="chat-frame" [src]="trustedUrl" frameborder="0" title="solo-live-chat"></iframe>
+</aside>

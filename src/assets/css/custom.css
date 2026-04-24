@@ -1,0 +1,8 @@
+/**
+ * Custom CSS that runs in the shell/host application context.
+ * Additional CSS modules are loaded dynamically by custom.js
+ * 
+ * Loaded modules:
+ * - alma-request-dropdown.css (pickup location styling)
+ */
+

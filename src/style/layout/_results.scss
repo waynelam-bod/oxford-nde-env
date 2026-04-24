@@ -1,0 +1,81 @@
+@use "mixins" as mixing;
+.custom-nde-theme {
+    nde-search-results-top-bar {
+        #resultsTopBarContainer {
+            border-radius: var(--mdc-text-button-container-shape) var(--mdc-text-button-container-shape) 0 0 !important;
+            .mdc-checkbox__ripple {
+                border-radius: var(--mdc-text-button-container-shape) !important;
+            }
+        }
+    }
+
+    nde-search-results {
+        .search-results-container {
+            border-radius: 0 0 var(--mdc-text-button-container-shape) var(--mdc-text-button-container-shape) !important;
+        }
+    }
+    nde-search-result-item-container {
+        .search-result-item.card {
+            grid-template-columns: 110px 1fr auto;
+        }
+    }
+    nde-search-results-pagination {
+        .page-number.current-page {
+            color: var(--oxford-off-white);
+        }
+        .pagination-container {
+            border-radius: var(--mdc-text-button-container-shape) !important;
+        }
+    }
+    nde-back-to-top {
+        button mat-icon svg path{
+            fill: var(--oxford-off-white);
+        }
+    }
+    .filters-container, .quick-filters-container {
+        .quick-filter-btn.mat-mdc-outlined-button {
+            border-radius: var(--mdc-text-button-container-shape) !important;
+        }
+    }
+    .record-thumbnail {
+        border-radius: var(--mdc-text-button-container-shape) !important;
+        width: 100px !important;
+        @include mixing.respond-to('small') {
+            width: 70px !important;
+        }
+    }
+
+    /* Browse search */
+    nde-browse-search-result {
+        :hover, :focus, :focus-within {
+            background-color: var(--oxford-shell-grey);
+        }
+    }
+    nde-browse-search-container {
+        .search-results-wrapper {
+            border-radius: var(--mdc-text-button-container-shape) !important;
+        }
+    }
+
+    /* Online availability */
+    nde-online-availability {
+        .quicklink-button {
+            border-radius: var(--mdc-text-button-container-shape) !important;
+        }
+        .online .quicklink-button {
+            color: var(--oxford-traffic-light-green);
+            border: 1px solid var(--oxford-traffic-light-green);
+        }
+    }
+
+    /* Record messages */
+    .solo-record-message {
+        padding: 12px 16px;
+        margin-bottom: 16px;
+        background-color: #f5f5f5;
+        border-left: 4px solid var(--oxford-red);
+        border-radius: 4px;
+        font-size: 14px;
+        line-height: 1.5;
+    }
+}

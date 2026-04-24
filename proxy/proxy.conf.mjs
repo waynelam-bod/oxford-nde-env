@@ -1,6 +1,6 @@
 import {PROXY_TARGET} from "./proxy.const.mjs";
 import {customizationConfigOverride} from "./customization_config_override.mjs";
-import {deepMerge} from "./proxy-utils.mjs";
+import {deepMerge, decompressBuffer, transformAlmaRequestResponse} from "./proxy-utils.mjs";
 
 
 
@@ -62,6 +62,43 @@ const proxyRules = [
     logLevel: 'debug',
     pathRewrite: { '^/nde/custom/.*/': '' },
 
+  },
+  {
+    context: ['/primaws/rest/priv/ILSServices/titleServices/**/AlmaRequest'],
+    target: PROXY_TARGET,
+    secure: true,
+    changeOrigin: true,
+    logLevel: 'debug',
+    selfHandleResponse: true,
+    onProxyRes(proxyRes, req, res) {
+      console.log('\n[AlmaRequest Proxy] Intercepting:', req.url);
+      const chunks = [];
+      proxyRes.on('data', chunk => chunks.push(chunk));
+      proxyRes.on('end', async () => {
+        // Copy original headers except content-encoding and content-length
+        Object.keys(proxyRes.headers).forEach(key => {
+          if (key.toLowerCase() !== 'content-encoding' && key.toLowerCase() !== 'content-length') {
+            res.setHeader(key, proxyRes.headers[key]);
+          }
+        });
+        res.statusCode = proxyRes.statusCode;
+
+        try {
+          const buffer = Buffer.concat(chunks);
+          const encoding = proxyRes.headers['content-encoding'];
+          console.log('[AlmaRequest Proxy] Response encoding:', encoding || 'none');
+          const bodyStr = await decompressBuffer(buffer, encoding);
+          const json = transformAlmaRequestResponse(JSON.parse(bodyStr));
+
+          res.setHeader('content-type', 'application/json');
+          res.end(JSON.stringify(json));
+          console.log('[AlmaRequest Proxy] Response sent successfully\n');
+        } catch (e) {
+          console.error('[AlmaRequest Proxy] Error:', e);
+          res.end(Buffer.concat(chunks));
+        }
+      });
+    }
   },
   {
     context: [

@@ -1,0 +1,7 @@
+<div class="logo-container display-flex flex-row flex-layout-space-between">
+<a *ngFor="let logo of renderedLogos" [href]="logo.href" class="nde-logo-link display-flex">
+  <div class="display-flex">
+    <img class="custom-nde-logo" [src]="logo.src" [alt]="logo.alt" />
+  </div>
+</a>
+</div>

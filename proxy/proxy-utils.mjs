@@ -1,3 +1,13 @@
+import zlib from 'zlib';
+import { promisify } from 'util';
+
+// Re-export shared transforms
+export { pickupLocationTransforms, transformAlmaRequestResponse } from './alma-request-transforms.mjs';
+
+const gunzip = promisify(zlib.gunzip);
+const inflate = promisify(zlib.inflate);
+const brotliDecompress = promisify(zlib.brotliDecompress);
+
 // Added deepMerge utility to retain unspecified fields
 export function deepMerge(target, source) {
   if (typeof target !== 'object' || target === null) return source;
@@ -12,3 +22,18 @@ export function deepMerge(target, source) {
   }
   return out;
 }
+
+/**
+ * Decompress buffer based on content-encoding header
+ */
+export async function decompressBuffer(buffer, encoding) {
+  if (encoding === 'gzip') {
+    return (await gunzip(buffer)).toString('utf8');
+  } else if (encoding === 'deflate') {
+    return (await inflate(buffer)).toString('utf8');
+  } else if (encoding === 'br') {
+    return (await brotliDecompress(buffer)).toString('utf8');
+  }
+  return buffer.toString('utf8');
+}
+

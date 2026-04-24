@@ -15,6 +15,8 @@ module.exports = {
   output: {
     uniqueName: "customModule",
     publicPath: 'auto',
+    filename: '[name].[contenthash].js',
+    chunkFilename: '[id].[contenthash].js', // Force numeric chunk IDs
   },
   optimization: {
     minimize: true,

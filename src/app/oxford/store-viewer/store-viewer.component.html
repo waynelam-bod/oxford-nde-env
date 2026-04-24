@@ -1,0 +1,47 @@
+<div class="store-viewer">
+  <header class="store-viewer-header">
+    <h2>Redux Store Viewer</h2>
+    <div class="controls">
+      <button (click)="toggleExpanded()" class="toggle-btn">
+        {{ isExpanded ? 'Collapse' : 'Expand' }}
+      </button>
+      <button (click)="copyToClipboard()" class="copy-btn">
+        Copy to Clipboard
+      </button>
+    </div>
+  </header>
+
+  <div class="store-viewer-meta" *ngIf="lastUpdated">
+    <span class="meta-item">
+      <strong>Last Updated:</strong> {{ lastUpdated | date:'medium' }}
+    </span>
+    <span class="meta-item">
+      <strong>State Keys:</strong> {{ getStateKeys().join(', ') || 'None' }}
+    </span>
+  </div>
+
+  <div class="search-container">
+    <input 
+      type="text" 
+      placeholder="Search state..." 
+      (input)="onSearchChange($event)"
+      class="search-input"
+    />
+  </div>
+
+  <div class="store-content" *ngIf="isExpanded">
+    <div class="state-display" *ngIf="filteredState; else noState">
+      <pre class="json-content">{{ filteredState | json }}</pre>
+    </div>
+    <ng-template #noState>
+      <div class="no-state">
+        <p>No store state available or store not configured.</p>
+        <p class="hint">Make sure the NgRx Store is properly provided by the shell application.</p>
+      </div>
+    </ng-template>
+  </div>
+
+  <div class="collapsed-hint" *ngIf="!isExpanded">
+    <p>Click "Expand" to view store contents</p>
+  </div>
+</div>

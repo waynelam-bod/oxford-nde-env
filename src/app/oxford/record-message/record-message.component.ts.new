@@ -1,0 +1,303 @@
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Store } from '@ngrx/store';
+import { TranslateService } from '@ngx-translate/core';
+import { Subscription } from 'rxjs';
+import { take } from 'rxjs/operators';
+
+type RecordType = 'LIBGUIDES' | 'ELDOAI' | 'ELDOPENACCESS' | 'ELDMAP' | 'ELDOTHER' | null;
+
+@Component({
+  selector: 'solo-record-message',
+  standalone: true,
+  imports: [CommonModule],
+  template: `<!-- Hidden component - injects message via DOM -->`,
+  styles: [`:host { display: none; }`]
+})
+export class RecordMessageComponent implements OnInit, OnDestroy {
+  private readonly store = inject(Store);
+  private readonly translate = inject(TranslateService);
+  private subscription: Subscription | null = null;
+  private styleElement: HTMLStyleElement | null = null;
+  private retryTimeout: any = null;
+  private maxRetries = 10;
+  private retryCount = 0;
+
+  private message: string = '';
+  private isRed: boolean = false;
+  private showMessage: boolean = false;
+
+  constructor() {
+    console.log('[RecordMessage] Constructor called!');
+  }
+
+  ngOnInit(): void {
+    console.log('[RecordMessage] ngOnInit called!');
+    this.injectStyles();
+    this.subscription = this.store.subscribe((state: any) => {
+      this.processState(state);
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.subscription?.unsubscribe();
+    this.clearRetryTimeout();
+    this.removeMessageElement();
+    this.removeStyles();
+  }
+
+  private injectStyles(): void {
+    if (document.getElementById('solo-record-message-styles')) {
+      return;
+    }
+    this.styleElement = document.createElement('style');
+    this.styleElement.id = 'solo-record-message-styles';
+    this.styleElement.textContent = `
+      .solo-record-message {
+        padding: 12px 16px;
+        margin-bottom: 16px;
+        background-color: #f5f5f5;
+        border-left: 4px solid #1976d2;
+        border-radius: 4px;
+        font-size: 14px;
+        line-height: 1.5;
+      }
+      .solo-record-message.red-message {
+        background-color: #ffebee;
+        border-left-color: #d32f2f;
+        color: #c62828;
+      }
+    `;
+    document.head.appendChild(this.styleElement);
+  }
+
+  private removeStyles(): void {
+    if (this.styleElement?.parentNode) {
+      this.styleElement.parentNode.removeChild(this.styleElement);
+      this.styleElement = null;
+    }
+  }
+
+  private clearRetryTimeout(): void {
+    if (this.retryTimeout) {
+      clearTimeout(this.retryTimeout);
+      this.retryTimeout = null;
+    }
+  }
+
+  private tryInjectMessage(): void {
+    this.clearRetryTimeout();
+    
+    const existingMessage = document.getElementById('solo-record-message');
+    
+    if (!this.showMessage) {
+      if (existingMessage) {
+        existingMessage.remove();
+      }
+      this.retryCount = 0;
+      return;
+    }
+
+    const availabilityEl = document.querySelector('nde-record-availability');
+    if (!availabilityEl) {
+      // Retry after a delay if element not found yet
+      if (this.retryCount < this.maxRetries) {
+        this.retryCount++;
+        this.retryTimeout = setTimeout(() => this.tryInjectMessage(), 500);
+      }
+      return;
+    }
+
+    this.retryCount = 0;
+
+    if (existingMessage) {
+      // Update content
+      existingMessage.className = 'solo-record-message' + (this.isRed ? ' red-message' : '');
+      existingMessage.innerHTML = this.message;
+      return;
+    }
+
+    // Create and inject message element
+    const messageEl = document.createElement('div');
+    messageEl.id = 'solo-record-message';
+    messageEl.className = 'solo-record-message' + (this.isRed ? ' red-message' : '');
+    messageEl.innerHTML = this.message;
+
+    availabilityEl.parentNode?.insertBefore(messageEl, availabilityEl);
+    console.log('[RecordMessage] Message injected before nde-record-availability');
+  }
+
+  private removeMessageElement(): void {
+    const existingMessage = document.getElementById('solo-record-message');
+    if (existingMessage) {
+      existingMessage.remove();
+    }
+  }
+
+  private processState(state: any): void {
+    const search = state?.Search;
+    console.log('[RecordMessage] Processing state:', {
+      hasSearch: !!search,
+      idsCount: search?.ids?.length,
+      ids: search?.ids
+    });
+
+    if (!search?.ids || search.ids.length !== 1) {
+      console.log('[RecordMessage] Skipping: not a single result');
+      this.showMessage = false;
+      this.tryInjectMessage();
+      return;
+    }
+
+    const id = search.ids[0];
+    const record = search.entities?.[id];
+    console.log('[RecordMessage] Record:', {
+      id,
+      hasRecord: !!record,
+      hasPnx: !!record?.pnx
+    });
+
+    if (!record?.pnx) {
+      console.log('[RecordMessage] Skipping: no pnx data');
+      this.showMessage = false;
+      this.tryInjectMessage();
+      return;
+    }
+
+    const recordType = this.detectRecordType(record.pnx);
+    console.log('[RecordMessage] Detected type:', recordType);
+    console.log('[RecordMessage] Full pnx structure:', JSON.stringify(record.pnx, null, 2));
+    this.handleRecordType(recordType, record.pnx);
+  }
+
+  private detectRecordType(pnx: any): RecordType {
+    const originalSourceId = pnx?.control?.originalsourceid?.[0] || '';
+    const rights = pnx?.display?.rights?.[0] || '';
+    const rightsLower = rights.toLowerCase();
+    const source = pnx?.display?.source?.[0] || '';
+    const displayType = pnx?.display?.type || [];
+
+    console.log('[RecordMessage] Type detection inputs:', {
+      originalSourceId,
+      rights,
+      rightsLower,
+      source,
+      displayType
+    });
+
+    // Check for LIBGUIDES
+    if (originalSourceId.startsWith('oai:libguides.com:az')) {
+      return 'LIBGUIDES';
+    }
+
+    // Check for ELD types - need "legaldeposit" or "legal deposit" in rights (case-insensitive)
+    const isLegalDeposit = rightsLower.startsWith('legaldeposit') || rightsLower.startsWith('legal deposit');
+    if (!isLegalDeposit) {
+      return null;
+    }
+
+    // Check for ELDOPENACCESS
+    if (rightsLower.includes('open government licence')) {
+      return 'ELDOPENACCESS';
+    }
+
+    // Check for ELDOAI
+    if (source.startsWith('ELDOAI')) {
+      return 'ELDOAI';
+    }
+
+    // Check for ELDMAP
+    if (displayType.some((t: string) => t?.toLowerCase().includes('map'))) {
+      return 'ELDMAP';
+    }
+
+    // Default ELD type (fallback for Legal Deposit records)
+    return 'ELDOTHER';
+  }
+
+  private handleRecordType(recordType: RecordType, pnx: any): void {
+    this.isRed = false;
+    this.message = '';
+    this.showMessage = false;
+
+    if (!recordType) {
+      this.tryInjectMessage();
+      return;
+    }
+
+    switch (recordType) {
+      case 'LIBGUIDES':
+        this.handleLibguides(pnx);
+        break;
+      case 'ELDOAI':
+        this.handleEldType('fulldisplay.constants.eld_legal_deposit_reg');
+        break;
+      case 'ELDOPENACCESS':
+        this.handleEldType('fulldisplay.constants.eld_legal_deposit_oa_delivery');
+        break;
+      case 'ELDMAP':
+        this.handleEldType('fulldisplay.constants.eld_legal_deposit_map');
+        break;
+      case 'ELDOTHER':
+        this.handleEldType('fulldisplay.constants.eld_legal_deposit_reg');
+        break;
+    }
+  }
+
+  private handleLibguides(pnx: any): void {
+    const description = pnx?.display?.description?.[0] || '';
+    console.log('[RecordMessage] LIBGUIDES description:', description);
+
+    // Check for various conditions in order
+    if (description.includes('within the United Kingdom')) {
+      console.log('[RecordMessage] Matched: UK restriction');
+      this.setTranslatedMessage('fulldisplay.constants.lg_display_uk_restriction');
+    } else if (description.includes('Special password required')) {
+      this.setTranslatedMessage('fulldisplay.constants.lg_display_special_word_required');
+    } else if (description.includes('Oxford Single Sign-On (SSO) required')) {
+      this.setTranslatedMessage('fulldisplay.constants.lg_display_oxf_login');
+    } else if (description.includes('requires you to create an account')) {
+      this.setTranslatedMessage('fulldisplay.constants.lg_display_require_register');
+    } else if (description.includes('may not under any circumstances download')) {
+      this.setTranslatedMessage('fulldisplay.constants.lg_display_may_not_download');
+    } else if (description.includes('British Newspaper Archive content')) {
+      this.setTranslatedMessage('fulldisplay.constants.lg_display_british_newspapers');
+    } else if (description.includes('Downtime')) {
+      // Display description in red for downtime
+      this.message = description;
+      this.isRed = true;
+      this.showMessage = true;
+      this.tryInjectMessage();
+    }
+  }
+
+  private handleEldType(translationKey: string): void {
+    this.setTranslatedMessage(translationKey);
+    this.modifyDeliveryAvailability();
+  }
+
+  private setTranslatedMessage(key: string): void {
+    console.log('[RecordMessage] Setting translated message:', key);
+    this.translate.get(key).pipe(take(1)).subscribe({
+      next: (translation: string) => {
+        console.log('[RecordMessage] Translation result:', { key, translation });
+        this.message = translation;
+        this.showMessage = true;
+        this.tryInjectMessage();
+      },
+      error: (err) => {
+        console.error('[RecordMessage] Translation error:', { key, err });
+        this.message = key;
+        this.showMessage = true;
+        this.tryInjectMessage();
+      }
+    });
+  }
+
+  private modifyDeliveryAvailability(): void {
+    // Dispatch action to modify delivery availability to "may_be_restricted"
+    // This would typically dispatch a store action, but the specific implementation
+    // depends on how the delivery availability is managed in the store
+    // For now, this is a placeholder for the availability modification logic
+  }
+}

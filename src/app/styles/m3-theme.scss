@@ -4,6 +4,21 @@
 @use 'sass:map';
 @use '@angular/material' as mat;
 
+//import Oxford styles
+@use "src/style/layout/header" as *;
+@use "src/style/layout/footer" as *;
+@use "src/style/layout/mixins" as *;
+@use "src/style/layout/variables" as *;
+@use "src/style/layout/default" as *;
+@use "src/style/layout/details" as *;
+@use "src/style/layout/resets" as *;
+@use "src/style/layout/searchbar" as *;
+@use "src/style/layout/results" as *;
+@use "src/style/layout/research" as *;
+@use "src/style/layout/browse" as *;
+@use "src/style/layout/help" as *;
+@use "src/style/layout/account" as *;
+
 // Note: Color palettes are generated from primary: #00dddd
 $_palettes: (
   primary: (

@@ -1,0 +1,161 @@
+.store-viewer {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  border: 2px solid #6200ea;
+  border-radius: 8px;
+  margin: 16px;
+  background: #fff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.store-viewer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: linear-gradient(135deg, #6200ea 0%, #3700b3 100%);
+  color: white;
+
+  h2 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  .controls {
+    display: flex;
+    gap: 8px;
+  }
+}
+
+.toggle-btn,
+.copy-btn {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.toggle-btn {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.3);
+  }
+}
+
+.copy-btn {
+  background: #03dac6;
+  color: #000;
+
+  &:hover {
+    background: #00bfa5;
+  }
+}
+
+.store-viewer-meta {
+  padding: 8px 16px;
+  background: #f5f5f5;
+  border-bottom: 1px solid #e0e0e0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  font-size: 13px;
+
+  .meta-item {
+    color: #666;
+
+    strong {
+      color: #333;
+    }
+  }
+}
+
+.search-container {
+  padding: 12px 16px;
+  background: #fafafa;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.search-input {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease;
+
+  &:focus {
+    outline: none;
+    border-color: #6200ea;
+    box-shadow: 0 0 0 2px rgba(98, 0, 234, 0.1);
+  }
+
+  &::placeholder {
+    color: #999;
+  }
+}
+
+.store-content {
+  max-height: 500px;
+  overflow: auto;
+}
+
+.state-display {
+  padding: 0;
+}
+
+.json-content {
+  margin: 0;
+  padding: 16px;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', monospace;
+  font-size: 12px;
+  line-height: 1.5;
+  background: #1e1e1e;
+  color: #d4d4d4;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-x: auto;
+}
+
+.no-state {
+  padding: 32px;
+  text-align: center;
+  color: #666;
+
+  p {
+    margin: 0 0 8px;
+  }
+
+  .hint {
+    font-size: 13px;
+    color: #999;
+    font-style: italic;
+  }
+}
+
+.collapsed-hint {
+  padding: 16px;
+  text-align: center;
+  color: #999;
+  font-style: italic;
+  background: #fafafa;
+
+  p {
+    margin: 0;
+  }
+}
+
+// Syntax highlighting for JSON (basic)
+.json-content {
+  // Keys
+  &::before {
+    content: '';
+  }
+}
