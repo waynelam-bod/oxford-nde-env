@@ -37,6 +37,9 @@ export const AppModule = ({providers, shellRouter}: {providers:any, shellRouter:
       for (const [key, value] of selectorComponentMap) {
         const customElement = createCustomElement(value, {injector: this.injector});
         this.webComponentSelectorMap.set(key, customElement);
+        if (!customElements.get(key)) {
+          customElements.define(key, customElement);
+        }
       }
     }
 
