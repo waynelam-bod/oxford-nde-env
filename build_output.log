@@ -1,0 +1,19 @@
+yarn run v1.22.22
+$ node prebuild.js
+ADDON_NAME not found in build-settings.env. Skipping renaming.
+ENV content:
+ INST_ID=44OXF_INST
+VIEW_ID=SOLO_NDE
+
+Extracted ASSET_BASE_URL: 
+✔ Written to /mnt/c/Users/bodl3227/PycharmProjects/oxford-nde-env/src/app/state/asset-base.generated.ts:
+export const assetBaseUrl = '';
+✔ Written to /mnt/c/Users/bodl3227/PycharmProjects/oxford-nde-env/src/app/state/env-content.generated.ts:
+export const envContent = {
+  "instId": "44OXF_INST",
+  "viewId": "SOLO_NDE",
+  "ndeHomeUrl": "/nde/home?lang=en&vid=44OXF_INST%3ASOLO_NDE"
+} as const;
+
+Prebuild complemeted successfully!
+$ ng build

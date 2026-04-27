@@ -1,0 +1,30 @@
+@use "mixins" as mixing;
+.custom-nde-theme {
+    nde-full-display-container {
+        .search-result-item-container .record-checkbox-number-container {
+            width: 112px !important;
+            @include mixing.respond-to('xsmall') {
+                width: 0 !important;
+            }
+            @include mixing.respond-to('small') {
+                width: 81px !important;
+            }
+            @include mixing.respond-to('medium') {
+                width: 125px !important;
+            }
+        }
+
+
+        .mat-expansion-panel, .mat-expansion-panel-header {
+            border-radius: var(--mdc-text-button-container-shape) !important;
+            &:hover, &:focus, &:focus-within {
+                border-radius: var(--mdc-text-button-container-shape) !important;
+            }
+        }
+
+        //Location
+        .getit-location-card, .not-grouped-by-library {
+            border-radius: var(--mdc-text-button-container-shape) !important;
+        }
+    }
+}

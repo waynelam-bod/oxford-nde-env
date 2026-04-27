@@ -1,0 +1,101 @@
+
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+:root .nde-overrides{
+  --sys-body-large: 400 1rem / 1.5rem "Roboto", sans-serif;
+  --sys-body-large-font: "Roboto", sans-serif;
+  --sys-body-medium: 400 .875rem / 1.25rem "Roboto", sans-serif;
+  --sys-body-medium-font: "Roboto", sans-serif;
+  --sys-body-small: 400 .75rem / 1rem "Roboto", sans-serif;
+  --sys-body-small-font: "Roboto", sans-serif;
+
+  --sys-display-large: 400 3.562rem / 4rem "Roboto", sans-serif;
+  --sys-display-large-font: "Roboto", sans-serif;
+  --sys-display-medium: 400 2.812rem / 3.25rem "Roboto", sans-serif;
+  --sys-display-medium-font: "Roboto", sans-serif;
+  --sys-display-small: 400 2.25rem / 2.75rem "Roboto", sans-serif;
+  --sys-display-small-font: "Roboto", sans-serif;
+
+  --sys-headline-large: 400 2rem / 2.5rem "Roboto", sans-serif;
+  --sys-headline-large-font: "Roboto", sans-serif;
+  --sys-headline-medium: 400 1.75rem / 2.25rem "Roboto", sans-serif;
+  --sys-headline-medium-font: "Roboto", sans-serif;
+  --sys-headline-small: 400 1.5rem / 2rem "Roboto", sans-serif;
+  --sys-headline-small-font: "Roboto", sans-serif;
+
+  --sys-label-large: 500 .875rem / 1.25rem "Roboto", sans-serif;
+  --sys-label-large-font: "Roboto", sans-serif;
+  --sys-label-medium: 500 .75rem / 1rem "Roboto", sans-serif;
+  --sys-label-medium-font: "Roboto", sans-serif;
+  --sys-label-small: 500 .688rem / 1rem "Roboto", sans-serif;
+  --sys-label-small-font: "Roboto", sans-serif;
+
+  --sys-title-large: 400 1.375rem / 1.75rem "Roboto", sans-serif;
+  --sys-title-large-font: "Roboto", sans-serif;
+  --sys-title-medium: 500 1rem / 1.5rem "Roboto", sans-serif;
+  --sys-title-medium-font: "Roboto", sans-serif;
+  --sys-title-small: 500 .875rem / 1.25rem "Roboto", sans-serif;
+  --sys-title-small-font: "Roboto", sans-serif;
+
+  /* Oxford Primary Colors */
+  --oxford-blue: #002147;
+  --oxford-mauve: #776885;
+  --oxford-peach: #E08D79;
+  --oxford-potters-pink: #ED9390;
+  --oxford-dusk: #C4A29E;
+  --oxford-lilac: #D1BDD5;
+  --oxford-sienna: #994636;
+  --oxford-red: #AA1A2D;
+  --oxford-plum: #7F055F;
+  --oxford-coral: #FE615A;
+
+  /* Oxford Neutral Colors */
+  --oxford-charcoal: #211D1C;
+  --oxford-ash-grey: #61615F;
+  --oxford-umber: #89827A;
+  --oxford-stone-grey: #D9D8D6;
+  --oxford-shell-grey: #F1EEE9;
+  --oxford-off-white: #F2F0F0;
+
+  /* Override */
+  --mdc-dialog-container-shape: 3px;
+  --mdc-filled-button-container-shape: 3px;
+  --mdc-text-button-container-shape: 3px;
+  --sys-primary-container: var(--oxford-umber);
+
+  /* Traffic light colors */
+  --oxford-traffic-light-green: #0f7d00;
+  --oxford-traffic-light-yellow: #FFA500;
+  --oxford-traffic-light-red: #FF0000;
+
+  /* SOLO colors */
+  --solo-action-yellow: #f5d55a;
+  --solo-action-red: #a5122a;
+  --solo-link-color: #337ab7;
+
+  /* width */
+  --oxford-responsive-width: 100%;
+
+  // Font size
+  --solo-tiny-font-size: 0.625rem;
+  --solo-small-font-size: 0.75rem;
+  --solo-default-font-size: 0.875rem;
+  --solo-medium-font-size: 1rem;
+  --solo-big-font-size: 1.125rem;
+  --solo-large-font-size: 1.5rem; 
+  --solo-x-large-font-size: 2rem;
+
+  // Font weights
+  --solo-font-weight-light: 300;
+  --solo-font-weight-normal: 400;
+  --solo-font-weight-bold: 500;
+  --solo-font-weight-heavy: 600;
+}
+
+/* default button */
+.mat-mdc-icon-button, .mat-mdc-button-persistent-ripple {
+  border-radius: var(--mdc-text-button-container-shape) !important;
+}
+.btn-rounded {
+  --mdc-text-button-container-shape: 3px;
+}

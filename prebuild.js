@@ -6,6 +6,7 @@ const bootstrapPath = path.resolve(__dirname, 'src/bootstrap.ts');
 const mainPath = path.resolve(__dirname, 'src/main.ts');
 const webpackConfigPath = path.resolve(__dirname, 'webpack.config.js');
 const assetBaseOutPath = path.resolve(__dirname, 'src/app/state/asset-base.generated.ts');
+const envContentOutPath = path.resolve(__dirname, 'src/app/state/env-content.generated.ts');
 
 if (!fs.existsSync(envFilePath)) {
     console.error("Error: build-settings.env file not found!");
@@ -56,11 +57,28 @@ if (match) {
 const assetBaseMatch = envContent.match(/^ASSET_BASE_URL=(.*)$/m);
 const assetBaseUrl = assetBaseMatch ? assetBaseMatch[1].trim() : '';
 
+const instIdMatch = envContent.match(/^INST_ID=(.*)$/m);
+const viewIdMatch = envContent.match(/^VIEW_ID=(.*)$/m);
+const instId = instIdMatch ? instIdMatch[1].trim() : '';
+const viewId = viewIdMatch ? viewIdMatch[1].trim() : '';
+const encodedVid = instId && viewId ? encodeURIComponent(`${instId}:${viewId}`) : '';
+const ndeHomeUrl = encodedVid ? `/nde/home?lang=en&vid=${encodedVid}` : '/nde/home';
+
 console.log('ENV content:\n', envContent);
 console.log('Extracted ASSET_BASE_URL:', assetBaseUrl);
 
 fs.writeFileSync(assetBaseOutPath, `export const assetBaseUrl = '${assetBaseUrl}';\n`);
 console.log(`✔ Written to ${assetBaseOutPath}:\nexport const assetBaseUrl = '${assetBaseUrl}';`);
+
+const envContentPayload = {
+    instId,
+    viewId,
+    ndeHomeUrl
+};
+
+const envContentTs = `export const envContent = ${JSON.stringify(envContentPayload, null, 2)} as const;\n`;
+fs.writeFileSync(envContentOutPath, envContentTs);
+console.log(`✔ Written to ${envContentOutPath}:\n${envContentTs}`);
 console.log('Prebuild complemeted successfully!');
 /*
 

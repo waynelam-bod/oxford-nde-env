@@ -1,0 +1,11 @@
+:host {
+  display: inline-block;
+}
+
+.logo-container {
+  column-gap: 0.5rem;
+  .custom-nde-logo {
+      height: 5rem;
+      width: auto;
+  }
+}

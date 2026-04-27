@@ -1,0 +1,85 @@
+@use "mixins" as mixing;
+
+footer {
+    background: var(--oxford-blue);
+    margin-top: 2rem;
+    padding-top: 1rem;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 0px 15px;
+    .container {
+        @include mixing.set-responsive-width;
+        text-align: center;
+        
+        bottom: 0;
+        left: 0;
+        font-size: 0;
+        overflow: hidden;
+        @include mixing.respond-to('xsmall') {
+            width: 100%;
+            padding-inline: 1rem;
+        }
+    }
+
+    ul {
+        text-align: left;
+        padding: 0;
+        li {
+            position: relative;
+            display: inline-block;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            margin: 0 7px;
+            @include mixing.respond-to('large') {
+                margin: 0 2px;
+            }
+            @include mixing.respond-to('medium')
+            {
+                font-size: 13.5px;
+                margin: 0 2px;
+            }
+            .mat-icon {
+                margin-right: 0.25rem;
+                color: var(--solo-action-yellow);
+            }
+        }
+
+        li:nth-child(even) {
+            color:#fff;
+        }
+
+        li:first-child {
+            margin-left: 0;
+        }
+
+        a.basic-button {
+            color: var(--solo-action-yellow) !important;
+            text-decoration: none;
+            background-color: transparent !important;
+            box-shadow: none !important;
+        }
+        
+        a:hover {
+            color: var(--oxford-off-white) !important;
+            text-decoration: none;
+        }
+    }
+    p {
+        position: relative;
+        font-size: 1rem;
+        color: var(--oxford-off-white);
+        text-align: left;
+        margin: 0;
+        top: 8px;
+        margin-bottom: 11px;
+        @include mixing.respond-to('small')
+        {
+            font-size: 12.5px;
+        }
+    }
+    #bodleian-logo {
+        @include mixing.respond-to('small')
+        {
+            width: 190px;
+        }
+    }
+}

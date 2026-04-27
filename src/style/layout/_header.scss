@@ -1,0 +1,69 @@
+.custom-nde-theme {
+    /* To hide Exlibris logo */
+    nde-logo {
+        img[alt="Library Logo"] {
+            display: none;
+        }
+    }
+    
+    /* header top bar */
+    .container{
+        header.top-bar {
+            background-color: var(--oxford-blue) !important;
+            padding-block: .75rem !important;
+            box-shadow: rgba(0, 0, 0, 0.35) 0px 0px 15px;
+            nde-main-menu {
+                margin-left: 1rem;
+
+                a.main-menu-label:not(:disabled),
+                button.show-more-btn {
+                    text-decoration: none !important;
+                    color: var(--sys-background) !important;
+                    &:hover, &:focus {
+
+                        background-color: var(--oxford-ash-grey) !important;
+                    }
+                    .mat-icon svg path {
+                        color: var(--sys-background) !important;
+                    }
+
+                    .mdc-button__label {
+                        text-decoration: none !important;
+                    }
+                }
+            }
+        }
+
+        .top-bar-background-image {
+            h2 {
+                display: none;
+            }
+        }
+    }
+
+    /* header menu overlay */
+    .cdk-overlay-container {
+        .mat-mdc-dialog-container {
+            margin-top: 0.5rem;
+        }
+    }
+
+    /* main menu */
+    .main-menu-label mat-icon svg path {
+    fill: var(--sys-background) !important;
+    }
+
+    /* user panel */
+    nde-user-panel {
+        .user-panel {
+            height: 100%;
+        }
+        nde-user-area {
+            .user-area-btn {
+                mat-icon svg path {
+                    fill: var(--sys-background) !important;
+                }
+            }
+        }
+    }
+}

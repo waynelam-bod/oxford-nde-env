@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <base href="/">
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>SOLO</title>
+  <link href="./homepage.css" rel="stylesheet">
+</head>
+<body>
+<main class="main-landing-page display-flex flex-column flex-layout-center-center">
+  <div class="menu-container width-100">
+    <ul role="list" class="menu width-100">
+      <li role="listitem">
+        <a id="Opening_hours_link" aria-label="Opening hours" role="link" href="https://www.bodleian.ox.ac.uk/libraries/">
+          <div class="icon display-flex">
+            <img alt="" src="assets/images/homePageImages/clock.svg">
+          </div>
+          <span>Finding a Library</span>
+        </a>
+      </li>
+      <li role="listitem">
+        <a id="FAQ_link" aria-label="FAQ" role="link" href="https://libguides.bodleian.ox.ac.uk/">
+          <div class="icon display-flex">
+            <img alt="" src="assets/images/homePageImages/search.svg">
+          </div>
+          <span>Subject &amp; Research Guides</span>
+        </a>
+      </li>
+      <li role="listitem">
+        <a id="Ask_a_librarian_link" aria-label="Ask a librarian" role="link" onclick='return window.open("https://eu.libraryh3lp.com/chat/bodleian-livechat@chat.eu.libraryh3lp.com?identity=Bodleian+Libraries&skin=14009","chat","resizable=1,width=420,height=450"),!1' href="#">
+          <div class="icon display-flex">
+            <img alt="" src="assets/images/homePageImages/book.svg">
+          </div>
+          <span>Live chat</span>
+        </a>
+      </li>
+      <li role="listitem">
+        <a id="Search_tips_link" aria-label="Search tips" role="link" href="https://libguides.bodleian.ox.ac.uk/solo/search">
+          <div class="icon display-flex">
+            <img alt="" src="assets/images/homePageImages/comp_search.svg">
+          </div>
+          <span>Search tips</span>
+        </a>
+      </li>
+      <li role="listitem">
+        <a id="Study_room_link" aria-label="Study room" role="link" href="https://www.bodleian.ox.ac.uk/services/group-study-rooms">
+          <div class="icon display-flex">
+            <img alt="" src="assets/images/homePageImages/book.svg">
+          </div>
+          <span>Group Study room</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="flex-row flex-layout-space-between width-100 getting-help-announcements-container">
+    <div class="getting-help display-flex flex-column flex-layout-start">
+      <h2 aria-level="2" role="heading" class="getting-help-title mat-headline-medium ">Getting help</h2>
+      <p class="getting-help-description">
+          If you have any questions or need help making the most of the extensive electronic resources available to you then please:</p>
+        <div class="getting-help-link-container flex-column gap-05">
+          <ul role="list">
+            <li role="listitem">
+              <mat-icon role="img" aria-hidden="false" aria-label="link" fonticon="chat" class="mat-icon material-icons mat-ligature-font mat-icon-no-color" data-mat-icon-type="font">chat</mat-icon>
+              <span> <a href="#" onclick="window.open('https://eu.libraryh3lp.com/chat/bodleian-livechat@chat.eu.libraryh3lp.com?identity=Bodleian+Libraries&skin=14009', 'chat', 'resizable=1,width=420,height=450'); return false;">use our Live Chat service</a></span>
+            </li>
+            <li role="listitem">
+              <mat-icon role="img" aria-hidden="false" aria-label="mail" fonticon="mail" class="mat-icon material-icons mat-ligature-font mat-icon-no-color" data-mat-icon-type="font">mail</mat-icon>
+              <span> contact us via <a href="mailto:reader.services@bodleian.ox.ac.uk">reader.services@bodleian.ox.ac.uk</a></span></li>
+          </ul>
+        </div>
+    </div>
+    <div class="announcements display-flex flex-column">
+      <header class="flex-column gap-1">
+        <h3 role="heading" aria-level="3" class="announcements-item-title mat-headline-medium">Announcements:</h3>
+      </header>
+      <article id="homepage-announcements" aria-live="polite"></article>
+      <custom-announcements-loader></custom-announcements-loader>
+
+    </div>
+    <div class="useful-link display-flex width-100">
+    <div class="useful-link-content flex-row">
+      <div class="useful-link-text flex-column flex-space-between ">
+        <h2 role="heading" aria-level="2" class="useful-link-text-title mat-headline-large">Useful Links</h2>
+        <div class="help-sign-in-container flex-column gap-05">
+          <ul role="list">
+            <li role="listitem">
+              <mat-icon role="img" aria-hidden="false" aria-label="link" fonticon="link" class="mat-icon material-icons mat-ligature-font mat-icon-no-color" data-mat-icon-type="font">link</mat-icon>
+              <span><a href="https://www.bodleian.ox.ac.uk" title="Bodleian Libraries Home Page" target="blank">Bodleian Libraries Home Page</a></span>
+            </li>
+            <li role="listitem">
+              <mat-icon role="img" aria-hidden="false" aria-label="link" fonticon="link" class="mat-icon material-icons mat-ligature-font mat-icon-no-color" data-mat-icon-type="font">link</mat-icon>
+              <span><a href="https://libguides.bodleian.ox.ac.uk/" title="LibGuides" target="blank" rel="noopener">Subject &amp; Research Guides</a></span></li>
+            <li role="listitem">
+              <mat-icon role="img" aria-hidden="false" aria-label="link" fonticon="link" class="mat-icon material-icons mat-ligature-font mat-icon-no-color" data-mat-icon-type="font">link</mat-icon>
+              <span><a href="https://www.bodleian.ox.ac.uk/subjects-and-libraries" title="Information to help you identify librarians and library resources for your studies" target="blank" rel="noopener">Find A Library</a></span></li>
+            <li role="listitem">
+              <mat-icon role="img" aria-hidden="false" aria-label="link" fonticon="link" class="mat-icon material-icons mat-ligature-font mat-icon-no-color" data-mat-icon-type="font">link</mat-icon>
+              <span><a href="/discovery/jsearch?vid=44OXF_INST:SOLO" title="Oxford's e-journals listed by title. (N.B. Records for all e-journals are also included in SOLO)" target="_blank" rel="noopener" class="md-primoExplore-theme">Journal Search</a> | <a href="https://browzine.com/libraries/1704/subjects" title="Browse our ejournal collections using BrowZine" class="md-primoExplore-theme">BrowZine</a></span></li>
+             <li role="listitem">
+              <mat-icon role="img" aria-hidden="false" aria-label="link" fonticon="link" class="mat-icon material-icons mat-ligature-font mat-icon-no-color" data-mat-icon-type="font">link</mat-icon>
+              <span><a href="https://libguides.bodleian.ox.ac.uk/az.php" title="Oxford's collection of bibliographic and reference databases. (N.B. Records for all these databases are also included in SOLO)" target="_blank" rel="noopener" class="md-primoExplore-theme">Databases A-Z</a></a></span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  
+</main>
+</main>
+</body>
+</html>
+

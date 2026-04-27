@@ -1,0 +1,38 @@
+.custom-nde-theme {
+    .search-bar-container {
+        .search-bar-wrapper {
+            border-radius: var(--mdc-text-button-container-shape) !important;
+        }
+        #search-dropdown-container-button-scopes-dropdown {
+            border-radius: var(--mdc-text-button-container-shape) !important;
+        }
+        .advanced-search-button {
+            border-radius: var(--mdc-text-button-container-shape) !important;
+        }
+    }
+    /* only on the main landing page */
+    .top-bar-background-image {
+        .advanced-search-button {
+            text-shadow: 2px 2px 2px var(--oxford-ash-grey);
+        }
+    }
+
+    /* advanced search / natural language search dialog */
+    .mat-mdc-dialog-surface {
+        border-radius: var(--mdc-dialog-container-shape) !important;
+        .textarea {
+            border-radius: var(--mdc-text-button-container-shape) !important;
+        }
+        .search-dropdown-container-button {
+            border-radius: var(--mdc-text-button-container-shape) !important;
+        }
+    }
+
+    /* Browse search */
+    nde-general-search-header {
+        .search_box_container {
+            border-radius: var(--mdc-text-button-container-shape) !important;
+        }
+    }
+    
+}
