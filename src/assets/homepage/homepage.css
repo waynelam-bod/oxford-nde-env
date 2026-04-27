@@ -10,6 +10,10 @@
 .custom-search-bar-container nde-top-bar {
   background: rgba(0, 33, 71, 0.5) !important;
 }
+/* Hide the default title in the search bar */
+.custom-search-bar-container h1 {
+  display:none;
+}
 
 /* Main landing page */
 .main-landing-page {
