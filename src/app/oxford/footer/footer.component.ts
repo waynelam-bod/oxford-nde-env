@@ -1,11 +1,13 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import {MatIconModule} from '@angular/material/icon'; 
+import { LibraryH3lpComponent } from './library-h3lp/library-h3lp.component';
 
 @Component({
   selector: 'nde-footer',
   standalone: true,
-  imports: [MatIconModule],
+  imports: [MatIconModule, LibraryH3lpComponent],
   templateUrl: './footer.component.html',
+  styleUrl: './footer.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FooterComponent {

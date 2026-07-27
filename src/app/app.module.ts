@@ -8,6 +8,7 @@ import {TranslateModule} from "@ngx-translate/core";
 import { CommonModule } from '@angular/common';
 import { AutoAssetSrcDirective } from './services/auto-asset-src.directive';
 import {SHELL_ROUTER} from "./injection-tokens";
+import { HomeBannerService } from './oxford/home-banner/home-banner.service';
 
 
 
@@ -29,18 +30,24 @@ export const AppModule = ({providers, shellRouter}: {providers:any, shellRouter:
   class AppModule implements DoBootstrap{
     private webComponentSelectorMap = new Map<string,  NgElementConstructor<unknown>>();
 
-    constructor(private injector: Injector, private router: Router) {
+    constructor(
+      private injector: Injector,
+      private router: Router,
+      private homeBannerService: HomeBannerService
+    ) {
       router.dispose(); //this prevents the router from being initialized and interfering with the shell app router
     }
 
     ngDoBootstrap(appRef: ApplicationRef) {
       for (const [key, value] of selectorComponentMap) {
         const customElement = createCustomElement(value, {injector: this.injector});
-        this.webComponentSelectorMap.set(key, customElement);
         if (!customElements.get(key)) {
-          customElements.define(key, customElement);
+          customElements.define(key, customElement as NgElementConstructor<any>);
         }
+        this.webComponentSelectorMap.set(key, customElement);
       }
+
+      this.homeBannerService.init();
     }
 
     /**

@@ -9,6 +9,22 @@ import {deepMerge} from "./proxy-utils.mjs";
 
 const proxyRules = [
   {
+    context: ['/nde/assets/homepage', '/nde/assets/homepage/**'],
+    target: 'not-needed',
+    router: (req) => `${req.protocol}://${req.get('host')}`,
+    changeOrigin: false,
+    logLevel: 'debug',
+    pathRewrite: (path) => path.replace(/^\/nde\/assets\/homepage\/?/, '/assets/homepage/'),
+  },
+  {
+    context: ['/nde/homepage.css'],
+    target: 'not-needed',
+    router: (req) => `${req.protocol}://${req.get('host')}`,
+    changeOrigin: false,
+    logLevel: 'debug',
+    pathRewrite: { '^/nde/homepage.css$': '/assets/homepage/homepage.css' },
+  },
+  {
     context: [
       '/custom/*/assets',
       '/custom/*/assets/**',

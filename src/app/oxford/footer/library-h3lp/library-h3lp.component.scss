@@ -1,4 +1,9 @@
-@use "../../../style/layout/mixins" as mixing;
+@use "../../../../style/layout/mixins" as mixing;
+
+:host {
+  display: contents;
+}
+
 #help-block {
   position: fixed;
   top: 180px;
