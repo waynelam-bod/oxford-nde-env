@@ -8,5 +8,4 @@ export const selectorComponentMap = new Map<string, any>([
 	['custom-announcements-loader', AnnouncementsComponent],
 	['nde-footer', FooterComponent],
 	['nde-footer-after', LibraryH3lpComponent]
-
 ]);

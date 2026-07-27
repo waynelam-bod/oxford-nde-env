@@ -37,6 +37,15 @@ yarn-error.log
 testem.log
 /typings
 
+# Playwright MCP artifacts
+/.playwright-mcp/
+/home-console.log
+/home-network.log
+/home-snapshot.yml
+/search-console.log
+/search-network.log
+/search-snapshot.yml
+
 # System files
 .DS_Store
 Thumbs.db
