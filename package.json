@@ -11,6 +11,8 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
+    "test:e2e": "playwright test",
+    "test:e2e:oxford": "playwright test tests/oxford-components.spec.ts",
     "postbuild": "node postbuild.js",
     "prebuild": "node prebuild.js",
     "run:all": "node node_modules/@angular-architects/module-federation/src/server/mf-dev-server.js"
@@ -54,6 +56,7 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
+    "@playwright/test": "^1.55.0",
     "ngx-build-plus": "^18.0.0",
     "typescript": "5.5.4",
     "webpack-cli": "^5.1.4",

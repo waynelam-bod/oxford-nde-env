@@ -39,6 +39,7 @@ testem.log
 
 # Playwright MCP artifacts
 /.playwright-mcp/
+/test-results/
 /home-console.log
 /home-network.log
 /home-snapshot.yml
