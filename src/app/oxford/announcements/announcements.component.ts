@@ -10,9 +10,14 @@ import {take} from 'rxjs';
   styleUrl: './announcements.component.scss'
 })
 export class AnnouncementsComponent implements OnInit, OnDestroy {
+  private static readonly MAX_OBSERVE_MS = 15000;
+
   private readonly translate = inject(TranslateService);
   private observer: MutationObserver | null = null;
   private renderedElement: HTMLElement | null = null;
+  private mutationScheduled = false;
+  private giveUpTimer: ReturnType<typeof setTimeout> | null = null;
+
   private readonly renderIfNeeded = () => {
     if (typeof document === 'undefined') {
       return;
@@ -45,6 +50,19 @@ export class AnnouncementsComponent implements OnInit, OnDestroy {
     this.disconnectDomReadyListener();
   };
 
+  // Coalesce bursts of mutations (common on a busy SPA) into a single check per frame.
+  private readonly onMutation = () => {
+    if (this.mutationScheduled) {
+      return;
+    }
+    this.mutationScheduled = true;
+    const runner = typeof requestAnimationFrame === 'function' ? requestAnimationFrame : (cb: () => void) => setTimeout(cb, 50);
+    runner(() => {
+      this.mutationScheduled = false;
+      this.renderIfNeeded();
+    });
+  };
+
   ngOnInit(): void {
     if (typeof document === 'undefined') {
       return;
@@ -57,8 +75,10 @@ export class AnnouncementsComponent implements OnInit, OnDestroy {
     }
 
     if (typeof MutationObserver !== 'undefined') {
-      this.observer = new MutationObserver(() => this.renderIfNeeded());
+      this.observer = new MutationObserver(this.onMutation);
       this.observer.observe(document.body, {childList: true, subtree: true});
+      // Don't watch the whole page forever if the container never shows up (e.g. non-homepage routes).
+      this.giveUpTimer = setTimeout(() => this.disconnectObserver(), AnnouncementsComponent.MAX_OBSERVE_MS);
     }
   }
 
@@ -75,6 +95,10 @@ export class AnnouncementsComponent implements OnInit, OnDestroy {
   }
 
   private disconnectObserver(): void {
+    if (this.giveUpTimer) {
+      clearTimeout(this.giveUpTimer);
+      this.giveUpTimer = null;
+    }
     if (!this.observer) {
       return;
     }

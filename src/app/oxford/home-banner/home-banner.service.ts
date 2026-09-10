@@ -290,9 +290,17 @@ export class HomeBannerService implements OnDestroy {
       if (rawConfig === this.translationKey || rawConfig.startsWith('fulldisplay.')) {
         return {};
       }
-      
+
+      const trimmedConfig = rawConfig.trim();
+      const unquotedConfig = trimmedConfig.startsWith('"') && trimmedConfig.endsWith('"')
+        ? trimmedConfig.slice(1, -1)
+        : trimmedConfig;
+
       try {
-        return JSON.parse(rawConfig) as HomeBannerConfig;
+        const parsed = JSON.parse(unquotedConfig);
+        return typeof parsed === 'string'
+          ? JSON.parse(parsed) as HomeBannerConfig
+          : parsed as HomeBannerConfig;
       } catch {
         return {};
       }

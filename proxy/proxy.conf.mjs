@@ -9,7 +9,7 @@ import {deepMerge} from "./proxy-utils.mjs";
 
 const proxyRules = [
   {
-    context: ['/nde/assets/homepage', '/nde/assets/homepage/**'],
+    context: (path) => path.startsWith('/nde/assets/homepage'),
     target: 'not-needed',
     router: (req) => `${req.protocol}://${req.get('host')}`,
     changeOrigin: false,
@@ -80,9 +80,7 @@ const proxyRules = [
 
   },
   {
-    context: [
-      '**', '!/nde/custom/**'
-    ],
+    context: (path) => !path.startsWith('/nde/custom/'),
     target: PROXY_TARGET,
     secure: true,
     changeOrigin: true,

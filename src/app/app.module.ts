@@ -10,6 +10,7 @@ import { AutoAssetSrcDirective } from './services/auto-asset-src.directive';
 import {SHELL_ROUTER} from "./injection-tokens";
 import { HomeBannerService } from './oxford/home-banner/home-banner.service';
 
+const registeredCustomElements = new Set<string>();
 
 
 export const AppModule = ({providers, shellRouter}: {providers:any, shellRouter: Router}) => {
@@ -40,9 +41,20 @@ export const AppModule = ({providers, shellRouter}: {providers:any, shellRouter:
 
     ngDoBootstrap(appRef: ApplicationRef) {
       for (const [key, value] of selectorComponentMap) {
+        if (registeredCustomElements.has(key) || customElements.get(key)) {
+          this.webComponentSelectorMap.set(key, customElements.get(key) as NgElementConstructor<unknown>);
+          continue;
+        }
+
         const customElement = createCustomElement(value, {injector: this.injector});
-        if (!customElements.get(key)) {
+        registeredCustomElements.add(key);
+        try {
           customElements.define(key, customElement as NgElementConstructor<any>);
+        } catch (error) {
+          registeredCustomElements.delete(key);
+          if (!(error instanceof DOMException) || error.name !== 'NotSupportedError') {
+            throw error;
+          }
         }
         this.webComponentSelectorMap.set(key, customElement);
       }

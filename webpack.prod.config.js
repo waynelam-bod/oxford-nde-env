@@ -1,9 +1,1 @@
-const baseConfig = require('./webpack.config');
-
-module.exports = {
-	...baseConfig,
-	output: {
-		...baseConfig.output,
-		publicPath: 'auto',
-	},
-};
+module.exports = require('./webpack.config');
