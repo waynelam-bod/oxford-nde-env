@@ -157,6 +157,10 @@ export class RecordMessageComponent implements OnInit, OnDestroy {
   private processSearchResults(): void {
     const itemCards = Array.from(document.querySelectorAll<HTMLElement>('nde-search-result-item-container .search-result-item.card'));
     const seenDocIds = new Set<string>();
+    // On the full-display page, the current record is also rendered as a highlighted
+    // search card alongside the detail panel. Showing the message in both places
+    // duplicates it on screen, so let the detail-context message take precedence.
+    const activeDetailDocId = document.querySelector('nde-record-availability') ? this.getDocIdFromUrl() : null;
 
     for (const itemCard of itemCards) {
       const docId = this.extractDocIdFromSearchItem(itemCard);
@@ -165,6 +169,12 @@ export class RecordMessageComponent implements OnInit, OnDestroy {
       }
 
       seenDocIds.add(docId);
+
+      if (docId === activeDetailDocId) {
+        itemCard.querySelector<HTMLElement>('.solo-record-message[data-solo-context="search"]')?.remove();
+        this.processedSearchDocIds.delete(docId);
+        continue;
+      }
 
       // Skip if we already processed this docId and the card hasn't changed
       const existing = itemCard.querySelector<HTMLElement>('.solo-record-message[data-solo-context="search"]');
