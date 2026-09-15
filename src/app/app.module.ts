@@ -9,6 +9,7 @@ import { CommonModule } from '@angular/common';
 import { AutoAssetSrcDirective } from './services/auto-asset-src.directive';
 import {SHELL_ROUTER} from "./injection-tokens";
 import { HomeBannerService } from './oxford/home-banner/home-banner.service';
+import { NetworkInterceptorService } from './services/network-interceptor.service';
 
 const registeredCustomElements = new Set<string>();
 
@@ -34,9 +35,11 @@ export const AppModule = ({providers, shellRouter}: {providers:any, shellRouter:
     constructor(
       private injector: Injector,
       private router: Router,
-      private homeBannerService: HomeBannerService
+      private homeBannerService: HomeBannerService,
+      private networkInterceptorService: NetworkInterceptorService
     ) {
       router.dispose(); //this prevents the router from being initialized and interfering with the shell app router
+      this.networkInterceptorService.init(); //patch fetch/XHR as early as possible, before Primo issues the AlmaRequest call
     }
 
     ngDoBootstrap(appRef: ApplicationRef) {

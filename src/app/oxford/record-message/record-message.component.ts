@@ -1,8 +1,9 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
-import { Observable, of } from 'rxjs';
-import { catchError, map, switchMap, take } from 'rxjs/operators';
+import { Observable, Subscription, of } from 'rxjs';
+import { catchError, distinctUntilChanged, map, switchMap, take } from 'rxjs/operators';
 import { RecordType, RecordTypeService } from './record-type.service';
 
 interface ResolvedRecordMessage {
@@ -18,12 +19,14 @@ interface ResolvedRecordMessage {
   styleUrl: './record-message.component.scss'
 })
 export class RecordMessageComponent implements OnInit, OnDestroy {
-  private static readonly PROCESS_DEBOUNCE_MS = 500;
+  private static readonly PROCESS_DEBOUNCE_MS = 100;
   private static readonly MESSAGE_SELECTOR = '.solo-record-message[data-solo-context]';
 
+  private readonly store = inject(Store);
   private readonly recordTypeService = inject(RecordTypeService);
   private readonly translate = inject(TranslateService);
   private observer: MutationObserver | null = null;
+  private storeSub: Subscription | null = null;
   private processTimer: ReturnType<typeof setTimeout> | null = null;
   private isProcessing = false;
   private readonly processedSearchDocIds = new Map<string, string>();
@@ -36,6 +39,16 @@ export class RecordMessageComponent implements OnInit, OnDestroy {
     }
 
     this.scheduleProcess();
+
+    this.storeSub = this.store
+      .pipe(
+        map((state: any) => state?.Search?.entities),
+        distinctUntilChanged()
+      )
+      .subscribe(() => {
+        this.scheduleProcess();
+      });
+
     if (typeof MutationObserver !== 'undefined') {
       this.observer = new MutationObserver((mutations) => this.onMutation(mutations));
       this.observer.observe(document.body, { childList: true, subtree: true });
@@ -46,6 +59,11 @@ export class RecordMessageComponent implements OnInit, OnDestroy {
     if (this.processTimer) {
       clearTimeout(this.processTimer);
       this.processTimer = null;
+    }
+
+    if (this.storeSub) {
+      this.storeSub.unsubscribe();
+      this.storeSub = null;
     }
 
     this.disconnectObserver();
@@ -177,22 +195,25 @@ export class RecordMessageComponent implements OnInit, OnDestroy {
       }
 
       // Skip if we already processed this docId and the card hasn't changed
-      const existing = itemCard.querySelector<HTMLElement>('.solo-record-message[data-solo-context="search"]');
       const cachedSignature = this.processedSearchDocIds.get(docId);
       const currentSignature = this.getSearchItemSignature(itemCard, docId);
 
-      if (existing && cachedSignature === currentSignature) {
+      if (cachedSignature === currentSignature) {
         continue;
       }
-
-      this.processedSearchDocIds.set(docId, currentSignature);
 
       this.recordTypeService.getRecordTypeById(docId)
         .pipe(
           take(1),
-          switchMap((result) => this.resolveMessage(result))
+          switchMap((result) => {
+            this.updateOnlineAvailability(result?.recordType ?? null, itemCard);
+            return this.resolveMessage(result);
+          })
         )
-        .subscribe((message) => this.renderMessageInSearchItem(itemCard, docId, message));
+        .subscribe((message) => {
+          this.renderMessageInSearchItem(itemCard, docId, message);
+          this.processedSearchDocIds.set(docId, this.getSearchItemSignature(itemCard, docId));
+        });
     }
 
     // Clean up stale cached docIds
@@ -218,7 +239,12 @@ export class RecordMessageComponent implements OnInit, OnDestroy {
     const pnxUrlElement = itemCard.querySelector<HTMLElement>('.urlToXmlPnx');
     const pnxUrl = pnxUrlElement?.getAttribute('data-url') || pnxUrlElement?.getAttribute('title') || '';
 
-    return [docId, linkHref, pnxUrl].join('|');
+    const hasMessage = itemCard.querySelector('.solo-record-message[data-solo-context="search"]') !== null;
+    const buttonStates = Array.from(itemCard.querySelectorAll<HTMLElement>('nde-online-availability .quicklink-button, .quicklink-button'))
+      .map((b) => `${b.className}:${b.textContent?.trim()}`)
+      .join(';');
+
+    return [docId, linkHref, pnxUrl, hasMessage, buttonStates].join('|');
   }
 
   private processFullDisplay(): void {
@@ -235,8 +261,12 @@ export class RecordMessageComponent implements OnInit, OnDestroy {
       return;
     }
 
-    // Skip if we already processed this exact docId and the availability element hasn't changed
-    const currentSignature = `${docId}:${availabilityEl.outerHTML.length}`;
+    const hasMessage = document.querySelector('.solo-record-message[data-solo-context="detail"]') !== null;
+    const buttonStates = Array.from(availabilityEl.querySelectorAll<HTMLElement>('nde-online-availability .quicklink-button, .quicklink-button'))
+      .map((b) => `${b.className}:${b.textContent?.trim()}`)
+      .join(';');
+
+    const currentSignature = [docId, availabilityEl.outerHTML.length, hasMessage, buttonStates].join('|');
     if (this.lastDetailDocId === docId && this.lastDetailSignature === currentSignature) {
       return;
     }
@@ -247,9 +277,64 @@ export class RecordMessageComponent implements OnInit, OnDestroy {
     this.recordTypeService.getRecordTypeById(docId)
       .pipe(
         take(1),
-        switchMap((result) => this.resolveMessage(result))
+        switchMap((result) => {
+          this.updateOnlineAvailability(result?.recordType ?? null, availabilityEl);
+          return this.resolveMessage(result);
+        })
       )
-      .subscribe((message) => this.renderMessageInFullDisplay(message, availabilityEl));
+      .subscribe((message) => {
+        this.renderMessageInFullDisplay(message, availabilityEl);
+        const updatedHasMessage = document.querySelector('.solo-record-message[data-solo-context="detail"]') !== null;
+        const updatedButtonStates = Array.from(availabilityEl.querySelectorAll<HTMLElement>('nde-online-availability .quicklink-button, .quicklink-button'))
+          .map((b) => `${b.className}:${b.textContent?.trim()}`)
+          .join(';');
+        this.lastDetailSignature = [docId, availabilityEl.outerHTML.length, updatedHasMessage, updatedButtonStates].join('|');
+      });
+  }
+
+  private updateOnlineAvailability(recordType: RecordType, container: HTMLElement): void {
+    const isEld = recordType === 'ELDOAI' || recordType === 'ELDOPENACCESS' || recordType === 'ELDMAP' || recordType === 'ELDBOOKS';
+    const buttons = container.querySelectorAll<HTMLElement>('nde-online-availability .quicklink-button, .quicklink-button');
+
+    buttons.forEach((button) => {
+      const buttonText = button.textContent?.trim() || '';
+      if (!buttonText.includes('Online Access') && !buttonText.includes('Reading room access')) {
+        return;
+      }
+
+      button.classList.toggle('eld-online-access', isEld);
+      if (isEld) {
+        this.replaceButtonText(button, 'Online Access', 'Reading room access');
+      } else {
+        this.replaceButtonText(button, 'Reading room access', 'Online Access');
+      }
+
+      const ariaLabel = button.getAttribute('aria-label');
+      if (ariaLabel) {
+        if (isEld && ariaLabel.includes('Online Access')) {
+          button.setAttribute('aria-label', ariaLabel.replace('Online Access', 'Reading room access'));
+        } else if (!isEld && ariaLabel.includes('Reading room access')) {
+          button.setAttribute('aria-label', ariaLabel.replace('Reading room access', 'Online Access'));
+        }
+      }
+    });
+  }
+
+  private replaceButtonText(button: HTMLElement, currentText: string, replacementText: string): void {
+    const walker = document.createTreeWalker(button, NodeFilter.SHOW_TEXT);
+    const textNodes: Text[] = [];
+    let node = walker.nextNode();
+
+    while (node) {
+      textNodes.push(node as Text);
+      node = walker.nextNode();
+    }
+
+    textNodes.forEach((textNode) => {
+      if (textNode.nodeValue?.includes(currentText)) {
+        textNode.nodeValue = textNode.nodeValue.replace(currentText, replacementText);
+      }
+    });
   }
 
   private resolveMessage(record: { recordType: RecordType; pnx: any } | null): Observable<ResolvedRecordMessage | null> {

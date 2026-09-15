@@ -1,6 +1,8 @@
 import {PROXY_TARGET} from "./proxy.const.mjs";
 import {customizationConfigOverride} from "./customization_config_override.mjs";
 import {deepMerge} from "./proxy-utils.mjs";
+import {applyAlmaRequestOverride} from "./alma-request-override.mjs";
+import {gunzipSync, inflateSync} from "node:zlib";
 
 
 
@@ -78,6 +80,40 @@ const proxyRules = [
     logLevel: 'debug',
     pathRewrite: { '^/nde/custom/.*/': '' },
 
+  },
+  {
+    context: (path) => /\/ILSServices\/titleServices\/.*\/AlmaRequest$/.test(path),
+    target: PROXY_TARGET,
+    secure: true,
+    changeOrigin: true,
+    logLevel: 'debug',
+    selfHandleResponse: true,
+    onProxyReq(proxyReq) {
+      // The response is parsed and rewritten below, so do not let the
+      // upstream compress it before it reaches this handler.
+      proxyReq.setHeader('accept-encoding', 'identity');
+    },
+    onProxyRes(proxyRes, req, res) {
+      const chunks = [];
+      proxyRes.on('data', chunk => chunks.push(chunk));
+      proxyRes.on('end', () => {
+        try {
+          let body = Buffer.concat(chunks);
+          const contentEncoding = String(proxyRes.headers['content-encoding'] || '').toLowerCase();
+          if (contentEncoding.includes('gzip')) body = gunzipSync(body);
+          else if (contentEncoding.includes('deflate')) body = inflateSync(body);
+          const bodyStr = body.toString('utf8');
+          const json = JSON.parse(bodyStr);
+          const out = JSON.stringify(applyAlmaRequestOverride(json));
+          res.setHeader('content-type', 'application/json');
+          res.removeHeader('content-encoding');
+          res.removeHeader('content-length');
+          res.end(out);
+        } catch (e) {
+          res.end(Buffer.concat(chunks));
+        }
+      });
+    }
   },
   {
     context: (path) => !path.startsWith('/nde/custom/'),

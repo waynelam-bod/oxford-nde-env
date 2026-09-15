@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
-import { map, take } from 'rxjs/operators';
+import { filter, map, take } from 'rxjs/operators';
 
 export type RecordType = 'LIBGUIDES' | 'ELDOAI' | 'ELDOPENACCESS' | 'ELDMAP' | 'ELDBOOKS' | null;
 
@@ -16,12 +16,11 @@ export class RecordTypeService {
    */
   getRecordTypeById(docId: string | null): Observable<{ recordType: RecordType; pnx: any } | null> {
     return this.store.pipe(
-      take(1),
       map((state: any) => {
         const search = state?.Search;
         const entities = search?.entities;
-        if (!entities) {
-          return null;
+        if (!entities || Object.keys(entities).length === 0) {
+          return undefined;
         }
 
         const resolvedDocId = docId || (search?.ids?.length === 1 ? search.ids[0] : null);
@@ -38,7 +37,9 @@ export class RecordTypeService {
           recordType: this.detectRecordType(record.pnx),
           pnx: record.pnx
         };
-      })
+      }),
+      filter((result): result is { recordType: RecordType; pnx: any } | null => result !== undefined),
+      take(1)
     );
   }
 
@@ -112,10 +113,16 @@ export class RecordTypeService {
       return entities[docId];
     }
 
+    const cleanDocId = docId.replace(/^alma/i, '');
+
     for (const key of Object.keys(entities)) {
       const entity = entities[key];
       const pnxRecordId = entity?.pnx?.control?.recordid?.[0] || entity?.pnx?.search?.recordid?.[0];
-      if (pnxRecordId === docId || key === docId) {
+      if (
+        pnxRecordId === docId ||
+        key === docId ||
+        (cleanDocId && (key.endsWith(cleanDocId) || pnxRecordId?.endsWith(cleanDocId)))
+      ) {
         return entity;
       }
     }
