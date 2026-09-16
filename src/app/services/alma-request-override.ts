@@ -8,9 +8,38 @@ export interface PickupLocation {
 
 // Add a key or a value string here to hide that pickup location from the list.
 export const pickupLocationBlacklist: string[] = [
-  // '24904615900007026$$CIRCULATION_DESK',
-  // 'Staff Office: Weston Archives Holding Area',
 ];
+
+export function setPickupLocationBlacklistFromTranslation(value: unknown): void {
+  let normalizedValue = value;
+  if (typeof normalizedValue === 'string') {
+    const trimmedValue = normalizedValue.trim();
+    if (!trimmedValue || trimmedValue === 'fulldisplay.constants.request_blacklist') return;
+
+    const unquotedValue = trimmedValue.startsWith('"') && trimmedValue.endsWith('"')
+      ? trimmedValue.slice(1, -1)
+      : trimmedValue;
+
+    try {
+      normalizedValue = JSON.parse(unquotedValue);
+      if (typeof normalizedValue === 'string') normalizedValue = JSON.parse(normalizedValue);
+    } catch {
+      return;
+    }
+  }
+
+  const translatedKeys = Array.isArray(normalizedValue)
+    ? normalizedValue
+    : (normalizedValue as { blacklist_keys?: unknown } | null)?.blacklist_keys;
+
+  if (!Array.isArray(translatedKeys)) return;
+
+  const keys = translatedKeys
+    .map((entry) => typeof entry === 'string' ? entry : (entry as { key?: unknown } | null)?.key)
+    .filter((key): key is string => typeof key === 'string' && key.length > 0);
+
+  if (keys.length > 0) pickupLocationBlacklist.splice(0, pickupLocationBlacklist.length, ...keys);
+}
 
 // Prefix applied to the display value based on the suffix of pickupLocation.key
 // (key format is "<id>$$<SUFFIX>").

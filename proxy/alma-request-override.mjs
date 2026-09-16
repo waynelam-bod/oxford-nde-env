@@ -1,8 +1,6 @@
 // Transform for the AlmaRequest titleServices response's pickupLocation lists.
 // Add a key or a value string here to hide that pickup location from the list.
 export const pickupLocationBlacklist = [
-  // '24904615900007026$$CIRCULATION_DESK',
-  // 'Staff Office: Weston Archives Holding Area',
 ];
 
 // Prefix applied to the display value based on the suffix of pickupLocation.key
