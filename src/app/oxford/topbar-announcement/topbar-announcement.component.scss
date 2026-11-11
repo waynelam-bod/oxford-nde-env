@@ -1,0 +1,27 @@
+:host {
+  display: block;
+}
+
+.announcement {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 1.25rem;
+  color: #004085;
+  background: #cce5ff;
+  border: 1px solid #b8daff;
+}
+
+.message {
+  flex: 1;
+  line-height: 1.5;
+}
+
+.close {
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font-size: 1.5rem;
+  line-height: 1;
+}

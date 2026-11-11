@@ -143,6 +143,39 @@ There are two options for setting up your local development environment: configu
 
 - All components in the NDE are intended to be customizable. However, if you encounter a component that does not support customization, please open a support case with us. This helps ensure that we can address the issue and potentially add customization support for that component in future updates.
 
+### Topbar Announcement Component
+
+The **Topbar Announcement Component** (`custom-topbar-announcement`) displays system-wide announcements in a styled topbar banner. Announcements are dynamically filtered based on the current view ID and datetime range.
+
+The component is mounted automatically inside `nde-header`; no additional HTML container is required.
+It matches the URL's `vid` parameter exactly and shows all announcements whose date range includes
+the current time. Start and end times are re-evaluated while the page remains open. Readers can
+dismiss individual messages until the component is recreated or the translation changes.
+
+#### Translation Configuration
+
+Set `fulldisplay.constants.general_message` to a JSON-encoded array, for example:
+
+```json
+[
+  {
+    "viewId": "44OXF_INST:SOLO_NDE",
+    "message": "Announcement message with <strong>HTML</strong> and <a href='https://example.com' target='_blank'>links</a>",
+    "from": "2025-03-03T14:00:00.000Z",
+    "to": "2049-03-03T14:00:00.000Z"
+  },
+  {
+    "viewId": "44OXF_INST:ELD",
+    "message": "This version is for <strong>electronic Legal Deposit only</strong>",
+    "from": "2025-06-17T09:30:00.000Z",
+    "to": "2025-07-13T08:00:00.000Z"
+  }
+]
+```
+
+Messages support HTML via Angular's HTML sanitizer; unsafe markup and URLs are removed.
+Invalid JSON or entries are reported in the browser console.
+
 ### Accessing host component instance
 
 You can get the instance of the component your custom component is hooked to by adding this property to your component class:

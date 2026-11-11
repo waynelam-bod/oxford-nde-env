@@ -1,0 +1,6 @@
+<div *ngFor="let announcement of visibleAnnouncements" class="announcement" role="status">
+  <div class="message" [innerHTML]="announcement.message"></div>
+  <button type="button" class="close" aria-label="Dismiss announcement" (click)="dismiss(announcement)">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
