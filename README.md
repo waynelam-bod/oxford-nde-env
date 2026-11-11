@@ -314,6 +314,8 @@ To apply the theme go to `_customized-theme.scss` and uncomment the following li
   @include mat.system-level-colors(m3-theme.$light-theme);
 }
 ```
+
+The layout overrides in `src/style/layout/` are included through `m3-theme.scss` and emitted in `custom.css`. Because the `custom` stylesheet bundle is configured with `inject: false`, the remote module loads `custom.css` from the same package URL as its remote chunks.
 ---
 
 
@@ -527,4 +529,3 @@ To ensure smooth development, debugging, and code management, we recommend setti
 
 ## Conclusion
 By following these steps, you can customize and extend the NDE interface using the `CustomModule` package. If you have any questions or run into issues, refer to the project documentation or the ExLibris support.
-

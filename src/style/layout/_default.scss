@@ -58,6 +58,8 @@
   --oxford-off-white: #F2F0F0;
 
   /* Override */
+  --sys-primary: var(--solo-link-color);
+  --sys-primary-container: #FFFFFF;
   --mdc-dialog-container-shape: 3px;
   --mdc-filled-button-container-shape: 3px;
   --mdc-text-button-container-shape: 3px;
@@ -90,12 +92,10 @@
   --solo-font-weight-normal: 400;
   --solo-font-weight-bold: 500;
   --solo-font-weight-heavy: 600;
+
+  //Radius
+  --mdc-elevated-card-container-shape: 3px;
+  --mdc-text-button-container-shape: 3px;
+  --mdc-outlined-card-container-shape: 3px;
 }
 
-/* default button */
-.mat-mdc-icon-button, .mat-mdc-button-persistent-ripple {
-  border-radius: var(--mdc-text-button-container-shape) !important;
-}
-.btn-rounded {
-  --mdc-text-button-container-shape: 3px;
-}

@@ -20,7 +20,14 @@
         }
     }
     nde-search-results-pagination {
+        .page-number, .pagination-arrow-button {
+            .mat-mdc-button-persistent-ripple {
+                border-radius: var(--mdc-text-button-container-shape);
+            }
+            
+        }
         .page-number.current-page {
+            border-radius: var(--mdc-text-button-container-shape);
             color: var(--oxford-off-white);
         }
         .pagination-container {
@@ -56,7 +63,33 @@
             border-radius: var(--mdc-text-button-container-shape) !important;
         }
     }
-
+    /* Physical availability */
+    nde-physical-availability-line {
+        margin-top: .2rem;
+        .availability-status {
+            margin: .2rem;
+            border-radius: var(--mdc-text-button-container-shape) !important;
+            border: 1px solid var(--oxford-traffic-light-green);
+            mat-icon {
+                margin-left: 1rem;
+                display: none;
+            }
+            &:hover, &:focus, &:focus-within {
+                background-color: var(--oxford-shell-grey);
+            }
+        }
+        .available-at-button {
+            color: var(--oxford-traffic-light-green);
+            font: var(--sys-body-medium);
+            letter-spacing: var(--sys-body-medium-tracking);
+            height: 32px;
+            line-height: 32px;
+            padding: .1rem 1rem;
+        }
+        .basic-button.mdc-button.mat-mdc-button:hover .mdc-button__label {
+            text-decoration: none !important;
+        }
+    }
     /* Online availability */
     nde-online-availability {
         .quicklink-button {

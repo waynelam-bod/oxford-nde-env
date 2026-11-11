@@ -1,0 +1,27 @@
+.custom-nde-theme {
+    nde-account {
+        .account-menu-container {
+            .active-link {
+                background-color: #ffff !important;
+                border-radius: var(--mdc-text-button-container-shape) .5rem .5rem var(--mdc-text-button-container-shape) !important;
+            }
+        }
+    
+        mat-card {
+            border-radius: var(--mdc-outlined-card-container-shape, var(--mat-sys-corner-medium));
+        }
+
+        nde-personal-details-view{
+            display: none;
+        }
+
+        nde-account-section-results {
+            .account-section-top-bar-container {
+                border-radius: var(--mdc-text-button-container-shape) var(--mdc-text-button-container-shape) 0 0 !important;
+            }
+            .account-section-results-container {
+                border-radius: 0 0 var(--mdc-text-button-container-shape) var(--mdc-text-button-container-shape) !important;
+            }
+        }
+    }
+}

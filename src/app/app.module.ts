@@ -11,9 +11,6 @@ import {SHELL_ROUTER} from "./injection-tokens";
 import { HomeBannerService } from './oxford/home-banner/home-banner.service';
 import { NetworkInterceptorService } from './services/network-interceptor.service';
 
-const registeredCustomElements = new Set<string>();
-
-
 export const AppModule = ({providers, shellRouter}: {providers:any, shellRouter: Router}) => {
    @NgModule({
     declarations: [
@@ -44,22 +41,16 @@ export const AppModule = ({providers, shellRouter}: {providers:any, shellRouter:
 
     ngDoBootstrap(appRef: ApplicationRef) {
       for (const [key, value] of selectorComponentMap) {
-        if (registeredCustomElements.has(key) || customElements.get(key)) {
-          this.webComponentSelectorMap.set(key, customElements.get(key) as NgElementConstructor<unknown>);
+        const existingElement = customElements.get(key);
+        if (existingElement) {
+          this.webComponentSelectorMap.set(key, existingElement as NgElementConstructor<unknown>);
           continue;
         }
 
-        const customElement = createCustomElement(value, {injector: this.injector});
-        registeredCustomElements.add(key);
-        try {
-          customElements.define(key, customElement as NgElementConstructor<any>);
-        } catch (error) {
-          registeredCustomElements.delete(key);
-          if (!(error instanceof DOMException) || error.name !== 'NotSupportedError') {
-            throw error;
-          }
-        }
-        this.webComponentSelectorMap.set(key, customElement);
+        const angularElement = createCustomElement(value, {injector: this.injector});
+        const customElement = class extends (angularElement as CustomElementConstructor) {};
+        customElements.define(key, customElement);
+        this.webComponentSelectorMap.set(key, customElement as NgElementConstructor<unknown>);
       }
 
       this.homeBannerService.init();
@@ -70,9 +61,13 @@ export const AppModule = ({providers, shellRouter}: {providers:any, shellRouter:
      * @param componentName
      */
     public getComponentRef(componentName:string) {
-      return this.webComponentSelectorMap.get(componentName);
+      const customElement = this.webComponentSelectorMap.get(componentName);
+      if (!customElement) {
+        return undefined;
+      }
+
+      return class extends (customElement as CustomElementConstructor) {} as NgElementConstructor<unknown>;
     }
   }
   return AppModule
 }
-
