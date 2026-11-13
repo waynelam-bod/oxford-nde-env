@@ -28,10 +28,15 @@
         }
     }
 }
-/* Request dialog (native Primo form): show Loan Policies before Delivery/Pickup Location */
+/* Request dialog (native Primo form): show Loan Policies before Delivery/Pickup Location,
+   and the digitization general-use notice at the very top */
 nde-request-form formly-group {
     display: flex;
     flex-direction: column;
+
+    > formly-field[data-qa="almaDigitization.generalUseLabel"] {
+        order: -3;
+    }
 
     > formly-field:has([id*="requestType"]) {
         order: -2;
