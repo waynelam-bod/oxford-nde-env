@@ -1,5 +1,6 @@
 import {ApplicationRef, DoBootstrap, Injector, NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
+import {HttpClientModule} from '@angular/common/http';
 import {AppComponent} from './app.component';
 import {createCustomElement, NgElementConstructor} from "@angular/elements";
 import {Router} from "@angular/router";
@@ -22,6 +23,7 @@ export const AppModule = ({providers, shellRouter}: {providers:any, shellRouter:
     imports: [
       BrowserModule,
       CommonModule,
+      HttpClientModule,
       TranslateModule.forRoot({})
     ],
     providers: [...providers, {provide: SHELL_ROUTER, useValue: shellRouter}],

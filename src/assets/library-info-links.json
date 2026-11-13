@@ -1,0 +1,402 @@
+[
+  {
+    "name": "Alexander Library",
+    "id": "https://libguides.bodleian.ox.ac.uk/ornithology"
+  },
+  {
+    "name": "All Souls College Library",
+    "id": "https://libguides.bodleian.ox.ac.uk/colleges"
+  },
+  {
+    "name": "Art, Archaeology and Ancient World Library",
+    "id": "https://www.bodleian.ox.ac.uk/libraries/sackler"
+  },
+  {
+    "name": "Balfour Library (Pitt Rivers Mus)",
+    "id": "https://www.bodleian.ox.ac.uk/other-libraries-at-oxford"
+  },
+  {
+    "name": "Balliol College Library",
+    "id": "https://libguides.bodleian.ox.ac.uk/colleges"
+  },
+  {
+    "name": "Blackfriars Library",
+    "id": "https://libguides.bodleian.ox.ac.uk/colleges"
+  },
+  {
+    "name": "Bodleian Offsite Storage",
+    "id": "https://www.bodleian.ox.ac.uk/services/borrow/request"
+  },
+  {
+    "name": "Bodleian Offsite Storage 2",
+    "id": "https://www.bodleian.ox.ac.uk/services/borrow/request"
+  },
+  {
+    "name": "Bodleian Old Library",
+    "id": "https://www.bodleian.ox.ac.uk/libraries/old-library"
+  },
+  {
+    "name": "Bodleian Staff Library",
+    "id": "mailto:staff-dev@bodleian.ox.ac.uk"
+  },
+  {
+    "name": "Brasenose College Library",
+    "id": "https://libguides.bodleian.ox.ac.uk/colleges"
+  },
+  {
+    "name": "Cairns Library at JR Hospital",
+    "id": "https://www.bodleian.ox.ac.uk/libraries/cairns-library"
+  },
+  {
+    "name": "Campion Hall Library",
+    "id": "https://libguides.bodleian.ox.ac.uk/colleges"
+  },
+  {
+    "name": "Careers Service Res Centre",
+    "id": "https://www.bodleian.ox.ac.uk/other-libraries-at-oxford"
+  },
+  {
+    "name": "Centre for Teaching & Learning",
+    "id": "https://www.ctl.ox.ac.uk/"
+  },
+  {
+    "name": "Christ Church Library",
+    "id": "https://libguides.bodleian.ox.ac.uk/colleges"
+  },
+  {
+    "name": "Computer Science Library",
+    "id": "https://www.bodleian.ox.ac.uk/other-libraries-at-oxford"
+  },
+  {
+    "name": "Corpus Christi College Library",
+    "id": "https://libguides.bodleian.ox.ac.uk/colleges"
+  },
+  {
+    "name": "Dept of Materials Library",
+    "id": "https://www.bodleian.ox.ac.uk/other-libraries-at-oxford"
+  },
+  {
+    "name": "Earth Sciences Library",
+    "id": "https://www.bodleian.ox.ac.uk/other-libraries-at-oxford"
+  },
+  {
+    "name": "Education Library",
+    "id": "https://www.bodleian.ox.ac.uk/libraries/education"
+  },
+  {
+    "name": "English Faculty Library",
+    "id": "https://www.bodleian.ox.ac.uk/libraries/english-faculty-library"
+  },
+  {
+    "name": "Exeter College Library",
+    "id": "https://libguides.bodleian.ox.ac.uk/colleges"
+  },
+  {
+    "name": "Girdlestone Memorial Library at NOC",
+    "id": "https://www.bodleian.ox.ac.uk/libraries/girdlestone-memorial-library"
+  },
+  {
+    "name": "Green Templeton College Library",
+    "id": "https://libguides.bodleian.ox.ac.uk/colleges"
+  },
+  {
+    "name": "Harris Manchester College Library",
+    "id": "https://libguides.bodleian.ox.ac.uk/colleges"
+  },
+  {
+    "name": "Hertford College Library",
+    "id": "https://libguides.bodleian.ox.ac.uk/colleges"
+  },
+  {
+    "name": "History of Medicine Library",
+    "id": "https://www.bodleian.ox.ac.uk/libraries/history-of-medicine"
+  },
+  {
+    "name": "Horton Hospital Library",
+    "id": "https://www.bodleian.ox.ac.uk/libraries/horton-library"
+  },
+  {
+    "name": "Human Sciences Library",
+    "id": "https://www.bodleian.ox.ac.uk/libraries/tylor"
+  },
+  {
+    "name": "Humanities Library",
+    "id": "https://www.bodleian.ox.ac.uk/libraries/humanities-library"
+  },
+  {
+    "name": "Instituto Camoes Library",
+    "id": "https://www.bodleian.ox.ac.uk/other-libraries-at-oxford"
+  },
+  {
+    "name": "Islamic Studies Library",
+    "id": "https://www.bodleian.ox.ac.uk/other-libraries-at-oxford"
+  },
+  {
+    "name": "Japanese Library",
+    "id": "https://www.bodleian.ox.ac.uk/libraries/japanese-library"
+  },
+  {
+    "name": "Jesus College Library",
+    "id": "https://libguides.bodleian.ox.ac.uk/colleges"
+  },
+  {
+    "name": "KB Chen Library",
+    "id": "https://www.bodleian.ox.ac.uk/libraries/china"
+  },
+  {
+    "name": "Keble College Library",
+    "id": "https://libguides.bodleian.ox.ac.uk/colleges"
+  },
+  {
+    "name": "Kellogg College Library",
+    "id": "https://libguides.bodleian.ox.ac.uk/colleges"
+  },
+  {
+    "name": "Lady Margaret Hall Library",
+    "id": "https://libguides.bodleian.ox.ac.uk/colleges"
+  },
+  {
+    "name": "Language Centre Library",
+    "id": "https://www.bodleian.ox.ac.uk/other-libraries-at-oxford"
+  },
+  {
+    "name": "Latin American Centre Library",
+    "id": "https://www.bodleian.ox.ac.uk/libraries/lac"
+  },
+  {
+    "name": "Law Library",
+    "id": "https://www.bodleian.ox.ac.uk/libraries/law"
+  },
+  {
+    "name": "Leopold Muller Memorial Library",
+    "id": "https://www.bodleian.ox.ac.uk/libraries/muller"
+  },
+  {
+    "name": "Linacre College Library",
+    "id": "https://libguides.bodleian.ox.ac.uk/colleges"
+  },
+  {
+    "name": "Lincoln College Library",
+    "id": "https://libguides.bodleian.ox.ac.uk/colleges"
+  },
+  {
+    "name": "Magdalen College Chantry Library",
+    "id": "https://www.bodleian.ox.ac.uk/other-libraries-at-oxford"
+  },
+  {
+    "name": "Magdalen College Library",
+    "id": "https://libguides.bodleian.ox.ac.uk/colleges"
+  },
+  {
+    "name": "Maison Francaise Library",
+    "id": "https://www.bodleian.ox.ac.uk/other-libraries-at-oxford"
+  },
+  {
+    "name": "Mansfield College Library",
+    "id": "https://libguides.bodleian.ox.ac.uk/colleges"
+  },
+  {
+    "name": "Mathematical Inst Library",
+    "id": "https://www.bodleian.ox.ac.uk/other-libraries-at-oxford"
+  },
+  {
+    "name": "Merton College Library",
+    "id": "https://libguides.bodleian.ox.ac.uk/colleges"
+  },
+  {
+    "name": "Middle East Centre Library",
+    "id": "https://www.bodleian.ox.ac.uk/other-libraries-at-oxford"
+  },
+  {
+    "name": "Museum of Hist of Sci Library",
+    "id": "https://www.bodleian.ox.ac.uk/other-libraries-at-oxford"
+  },
+  {
+    "name": "Museum of Nat Hist Library",
+    "id": "https://www.bodleian.ox.ac.uk/other-libraries-at-oxford"
+  },
+  {
+    "name": "Music Faculty Library",
+    "id": "https://www.bodleian.ox.ac.uk/libraries/music"
+  },
+  {
+    "name": "New College Library",
+    "id": "https://libguides.bodleian.ox.ac.uk/colleges"
+  },
+  {
+    "name": "Nizami Ganjavi Library",
+    "id": "https://www.bodleian.ox.ac.uk/libraries/nizami-ganjavi-library"
+  },
+  {
+    "name": "Nuffield College Library",
+    "id": "https://libguides.bodleian.ox.ac.uk/colleges"
+  },
+  {
+    "name": "Old Road Campus Library",
+    "id": "https://www.bodleian.ox.ac.uk/libraries/knowledge-centre"
+  },
+  {
+    "name": "Oriel College Library",
+    "id": "https://libguides.bodleian.ox.ac.uk/colleges"
+  },
+  {
+    "name": "Oxford Centre for Mission Studies Library",
+    "id": "https://www.bodleian.ox.ac.uk/other-libraries-at-oxford"
+  },
+  {
+    "name": "Oxford Internet Inst Library",
+    "id": "https://www.bodleian.ox.ac.uk/other-libraries-at-oxford"
+  },
+  {
+    "name": "Oxford Lifelong Learning Library",
+    "id": "https://www.bodleian.ox.ac.uk/libraries/conted"
+  },
+  {
+    "name": "Oxford Union Society Library",
+    "id": "https://www.bodleian.ox.ac.uk/other-libraries-at-oxford"
+  },
+  {
+    "name": "Oxfordshire History Centre",
+    "id": "https://www.oxfordshire.gov.uk/residents/leisure-and-culture/history/oxfordshire-history-centre"
+  },
+  {
+    "name": "Pembroke College Library",
+    "id": "https://libguides.bodleian.ox.ac.uk/colleges"
+  },
+  {
+    "name": "Philosophy & Theology Library",
+    "id": "https://www.bodleian.ox.ac.uk/libraries/ptfl"
+  },
+  {
+    "name": "Pusey House Library",
+    "id": "https://www.bodleian.ox.ac.uk/other-libraries-at-oxford"
+  },
+  {
+    "name": "Queen's College Library",
+    "id": "https://libguides.bodleian.ox.ac.uk/colleges"
+  },
+  {
+    "name": "Radcliffe Camera",
+    "id": "https://www.bodleian.ox.ac.uk/libraries/radcliffe-camera"
+  },
+  {
+    "name": "Radcliffe Science Library",
+    "id": "https://www.bodleian.ox.ac.uk/libraries/rsl"
+  },
+  {
+    "name": "Regent's Park College Library",
+    "id": "https://libguides.bodleian.ox.ac.uk/colleges"
+  },
+  {
+    "name": "Reuben College Library",
+    "id": "https://reuben.ox.ac.uk/college-library-0"
+  },
+  {
+    "name": "Ruskin School Library",
+    "id": "https://www.bodleian.ox.ac.uk/other-libraries-at-oxford"
+  },
+  {
+    "name": "Russian & East Eur. Library",
+    "id": "https://www.bodleian.ox.ac.uk/other-libraries-at-oxford"
+  },
+  {
+    "name": "Sainsbury Library",
+    "id": "https://www.bodleian.ox.ac.uk/libraries/sainsbury"
+  },
+  {
+    "name": "Sherardian Library",
+    "id": "https://www.bodleian.ox.ac.uk/libraries/sherardian-library"
+  },
+  {
+    "name": "Social Science Library",
+    "id": "https://www.bodleian.ox.ac.uk/libraries/ssl"
+  },
+  {
+    "name": "Somerville College Library",
+    "id": "https://libguides.bodleian.ox.ac.uk/colleges"
+  },
+  {
+    "name": "St Anne's College Library",
+    "id": "https://libguides.bodleian.ox.ac.uk/colleges"
+  },
+  {
+    "name": "St Antony's College Library",
+    "id": "https://libguides.bodleian.ox.ac.uk/colleges"
+  },
+  {
+    "name": "St Benet's Hall Library",
+    "id": "https://libguides.bodleian.ox.ac.uk/colleges"
+  },
+  {
+    "name": "St Catherine's Coll Library",
+    "id": "https://libguides.bodleian.ox.ac.uk/colleges"
+  },
+  {
+    "name": "St Cross College Library",
+    "id": "https://libguides.bodleian.ox.ac.uk/colleges"
+  },
+  {
+    "name": "St Edmund Hall Library",
+    "id": "https://libguides.bodleian.ox.ac.uk/colleges"
+  },
+  {
+    "name": "St Hilda's College Library",
+    "id": "https://libguides.bodleian.ox.ac.uk/colleges"
+  },
+  {
+    "name": "St Hugh's College Library",
+    "id": "https://libguides.bodleian.ox.ac.uk/colleges"
+  },
+  {
+    "name": "St John's College Library",
+    "id": "https://libguides.bodleian.ox.ac.uk/colleges"
+  },
+  {
+    "name": "St Peter's College Library",
+    "id": "https://libguides.bodleian.ox.ac.uk/colleges"
+  },
+  {
+    "name": "Statistics Library",
+    "id": "https://www.bodleian.ox.ac.uk/other-libraries-at-oxford"
+  },
+  {
+    "name": "Taylor Institution Library",
+    "id": "https://www.bodleian.ox.ac.uk/libraries/taylor"
+  },
+  {
+    "name": "Taylor Slavonic Self-Collect",
+    "id": "https://www.bodleian.ox.ac.uk/libraries/taylor"
+  },
+  {
+    "name": "Trinity College Library",
+    "id": "https://libguides.bodleian.ox.ac.uk/colleges"
+  },
+  {
+    "name": "University College Library",
+    "id": "https://libguides.bodleian.ox.ac.uk/colleges"
+  },
+  {
+    "name": "Vere Harmsworth Library",
+    "id": "https://www.bodleian.ox.ac.uk/libraries/vhl"
+  },
+  {
+    "name": "Wadham College Library",
+    "id": "https://libguides.bodleian.ox.ac.uk/colleges"
+  },
+  {
+    "name": "Weston Library",
+    "id": "https://www.bodleian.ox.ac.uk/libraries/weston"
+  },
+  {
+    "name": "Wolfson College Library",
+    "id": "https://libguides.bodleian.ox.ac.uk/colleges"
+  },
+  {
+    "name": "Worcester College Library",
+    "id": "https://libguides.bodleian.ox.ac.uk/colleges"
+  },
+  {
+    "name": "Wycliffe Hall Library",
+    "id": "https://www.wycliffe.ox.ac.uk/library"
+  }
+]

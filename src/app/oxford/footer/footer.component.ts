@@ -2,11 +2,12 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import {MatIconModule} from '@angular/material/icon'; 
 import { LibraryH3lpComponent } from './library-h3lp/library-h3lp.component';
 import { RecordMessageComponent } from '../record-message/record-message.component';
+import { LocationInfoLoaderComponent } from '../location-info-loader.component';
 
 @Component({
   selector: 'nde-footer',
   standalone: true,
-  imports: [MatIconModule, LibraryH3lpComponent, RecordMessageComponent],
+  imports: [MatIconModule, LibraryH3lpComponent, RecordMessageComponent, LocationInfoLoaderComponent],
   templateUrl: './footer.component.html',
   styleUrl: './footer.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

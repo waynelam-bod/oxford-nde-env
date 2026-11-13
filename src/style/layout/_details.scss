@@ -26,6 +26,35 @@
         .getit-location-card, .not-grouped-by-library {
             border-radius: var(--mdc-text-button-container-shape) !important;
         }
+
+        // Library title with info icon
+        .getit-library-title {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+
+            // Info icon will be added dynamically via location-info component
+            &::after {
+                content: '';
+                display: none;
+            }
+        }
+
+        // Style for dynamically added library info button
+        .library-info-button {
+            --mdc-icon-button-icon-size: 18px;
+            --mdc-button-state-layer-size: 28px;
+            height: 24px;
+            width: 28px;
+            padding: 2px;
+            margin-left: 8px;
+            border: none;
+            background-color: transparent;
+            cursor: pointer;
+            &:hover {
+                opacity: 0.8;
+            }
+        }
     }
 }
 /* Request dialog (native Primo form): show Loan Policies before Delivery/Pickup Location,
