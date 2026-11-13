@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { take } from 'rxjs/operators';
-import { applyAlmaRequestOverride, isAlmaRequestUrl, setPickupLocationBlacklistFromTranslation } from './alma-request-override';
+import { applyAlmaRequestOverride, isAlmaRequestUrl, setPickupLocationBlacklistFromTranslation, setPickupLocationLabelRulesFromTranslation } from './alma-request-override';
 
 // Patches window.fetch/XMLHttpRequest to rewrite AlmaRequest responses in production,
 // where there is no dev-server proxy to intercept the network call.
@@ -18,6 +18,7 @@ export class NetworkInterceptorService {
     this.initialized = true;
 
     this.loadPickupLocationBlacklist();
+    this.loadPickupLocationLabelRules();
     this.patchFetch();
     this.patchXhr();
   }
@@ -25,6 +26,12 @@ export class NetworkInterceptorService {
   private loadPickupLocationBlacklist(): void {
     this.translate.get('fulldisplay.constants.request_blacklist').pipe(take(1)).subscribe({
       next: (value: unknown) => setPickupLocationBlacklistFromTranslation(value),
+    });
+  }
+
+  private loadPickupLocationLabelRules(): void {
+    this.translate.get('fulldisplay.constants.request_label_rules').pipe(take(1)).subscribe({
+      next: (value: unknown) => setPickupLocationLabelRulesFromTranslation(value),
     });
   }
 
