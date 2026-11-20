@@ -12,3 +12,15 @@ $theme: mat.m2-define-light-theme((
 ));
 
 @include mat.all-component-themes($theme);
+
+/* Import layout styles */
+@import './style/layout/variables';
+@import './style/layout/mixins';
+@import './style/layout/default';
+@import './style/layout/header';
+@import './style/layout/searchbar';
+@import './style/layout/results';
+@import './style/layout/browse';
+@import './style/layout/details';
+@import './style/layout/footer';
+@import './style/layout/account';

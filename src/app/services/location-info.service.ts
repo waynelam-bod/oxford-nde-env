@@ -1,51 +1,35 @@
-import { Injectable, inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { take } from 'rxjs';
-
-export interface LibraryInfo {
-  id: string;
-  name: string;
-}
+import { Injectable } from '@angular/core';
+import { LIBRARY_INFO_LINKS, LibraryInfo } from '../config/library-info.config';
 
 /**
  * Service to inject library info icons next to library titles in the location cards.
- * The library link data is loaded from assets/library-info-links.json
+ * The library link data is imported from config/library-info.config.ts
  */
 @Injectable({
   providedIn: 'root'
 })
 export class LocationInfoService {
-  private static readonly MAX_OBSERVE_MS = 15000;
 
-  private readonly httpClient = inject(HttpClient);
   private observer: MutationObserver | null = null;
-  private giveUpTimer: ReturnType<typeof setTimeout> | null = null;
   private libraryMap: Map<string, LibraryInfo> = new Map();
   private initialized = false;
 
   initialize(): void {
-    if (this.initialized) return;
-    this.initialized = true;
+    // Always reconnect the observer when initializing
+    // (service may be reused when navigating back to the page)
+    this.disconnectObserver();
+    this.initialized = false;
 
     this.loadLibraryData();
   }
 
   private loadLibraryData(): void {
-    this.httpClient.get<LibraryInfo[]>('/assets/library-info-links.json')
-      .pipe(take(1))
-      .subscribe({
-        next: (data: LibraryInfo[]) => {
-          if (Array.isArray(data)) {
-            data.forEach((lib: LibraryInfo) => {
-              this.libraryMap.set(lib.name.toLowerCase(), lib);
-            });
-            this.observeLocationTitles();
-          }
-        },
-        error: (error) => {
-          console.warn('Failed to load library-info-links.json:', error);
-        }
+    if (Array.isArray(LIBRARY_INFO_LINKS)) {
+      LIBRARY_INFO_LINKS.forEach((lib: LibraryInfo) => {
+        this.libraryMap.set(lib.name.toLowerCase(), lib);
       });
+      this.observeLocationTitles();
+    }
   }
 
   private observeLocationTitles(): void {
@@ -67,7 +51,6 @@ export class LocationInfoService {
         attachToTitles();
       });
       this.observer.observe(document.body, { childList: true, subtree: true });
-      this.giveUpTimer = setTimeout(() => this.disconnectObserver(), LocationInfoService.MAX_OBSERVE_MS);
     }
   }
 
@@ -106,10 +89,6 @@ export class LocationInfoService {
   }
 
   private disconnectObserver(): void {
-    if (this.giveUpTimer) {
-      clearTimeout(this.giveUpTimer);
-      this.giveUpTimer = null;
-    }
     if (!this.observer) {
       return;
     }

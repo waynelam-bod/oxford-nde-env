@@ -11,7 +11,7 @@ import { LocationInfoLoaderComponent } from '../oxford/location-info-loader.comp
  * are hosted inside `nde-footer` (FooterComponent) so they are active across all pages.
  * AlmaRequest overrides are applied in `alma-request-override.ts` and do not require a custom component.
  * LocationInfoLoaderComponent dynamically injects library info icons next to library titles using
- * data from assets/library-info-links.json.
+ * data from config/library-info.config.ts.
  */
 export const selectorComponentMap = new Map<string, any>([
 	['nde-logo', LogoComponent],
