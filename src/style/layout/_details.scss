@@ -1,4 +1,4 @@
-@use "mixins" as mixing;
+@use './mixins' as mixing;
 .custom-nde-theme {
     nde-full-display-container {
         .search-result-item-container .record-checkbox-number-container {
@@ -57,21 +57,25 @@
         }
     }
 }
-/* Request dialog (native Primo form): show Loan Policies before Delivery/Pickup Location,
-   and the digitization general-use notice at the very top */
-nde-request-form formly-group {
-    display: flex;
-    flex-direction: column;
+/* Request dialog: keep Item Description before Request Type and Loan Policies,
+   with the digitization general-use notice first when present. */
+nde-request-form formly-form > formly-field > formly-group {
+    display: flex !important;
+    flex-direction: column !important;
 
     > formly-field[data-qa="almaDigitization.generalUseLabel"] {
-        order: -3;
+        order: -4 !important;
     }
 
-    > formly-field:has([id*="requestType"]) {
-        order: -2;
+    > formly-field[data-qa="almaItemRequest.itemDescription"] {
+        order: -3 !important;
     }
 
-    > formly-field:has([id*="termsOfUse"]) {
-        order: -1;
+    > formly-field[data-qa="almaRequest.requestType"] {
+        order: -2 !important;
+    }
+
+    > formly-field[data-qa="almaRequest.termsOfUse"] {
+        order: -1 !important;
     }
 }
