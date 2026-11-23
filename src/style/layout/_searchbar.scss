@@ -36,3 +36,20 @@
     }
     
 }
+
+/* Homepage search bar styling - global styles to apply to Primo elements */
+.custom-search-bar-container {
+    height: 20rem !important;
+
+    .background-overlay {
+        display: none !important;
+    }
+
+    nde-top-bar {
+        background: rgba(0, 33, 71, 0.5) !important;
+    }
+
+    h1 {
+        display: none !important;
+    }
+}

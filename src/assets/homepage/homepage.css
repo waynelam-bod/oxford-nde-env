@@ -4,7 +4,7 @@
 }
 
 .custom-search-bar-container .background-overlay {
-  display: none;
+  display: none !important;
 }
 
 .custom-search-bar-container nde-top-bar {
@@ -12,7 +12,7 @@
 }
 /* Hide the default title in the search bar */
 .custom-search-bar-container h1 {
-  display:none;
+  display: none !important;
 }
 
 /* Main landing page */
