@@ -1,0 +1,6 @@
+{
+  "terminal.integrated.env.windows": {
+    "PATH": "C:\\Users\\bodl3227\\AppData\\Local\\Programs\\OpenAI\\Codex\\bin;C:\\Program Files\\Git\\bin;C:\\Users\\bodl3227\\.local\\bin;${env:PATH}"
+  },
+  "git.ignoreLimitWarning": true
+}

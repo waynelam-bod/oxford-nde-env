@@ -1,0 +1,20 @@
+mode = "supervised"
+
+[routing.defaults]
+provider = "codex"
+model = "gpt-6.1-sol"
+
+[skills]
+paths = [".agents/skills"]
+
+[agents.codex]
+path = "C:\\Users\\bodl3227\\AppData\\Local\\Programs\\OpenAI\\Codex\\bin"
+
+[adapters.backlog]
+skill = "backlog"
+
+[adapters.backlog.scripts]
+sync = "powershell -NoProfile -ExecutionPolicy Bypass -File adapters/backlog-sync.ps1"
+add = "powershell -NoProfile -ExecutionPolicy Bypass -File adapters/backlog-add.ps1"
+done = "powershell -NoProfile -ExecutionPolicy Bypass -File adapters/backlog-done.ps1"
+edit = "powershell -NoProfile -ExecutionPolicy Bypass -File adapters/backlog-edit.ps1"
