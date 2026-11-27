@@ -12,6 +12,7 @@ import {SHELL_ROUTER} from "./injection-tokens";
 import { HomeBannerService } from './oxford/home-banner/home-banner.service';
 import { NetworkInterceptorService } from './services/network-interceptor.service';
 import { TopbarAnnouncementService } from './oxford/topbar-announcement/topbar-announcement.service';
+import { PrintDeliverService } from './oxford/print-deliver/print-deliver.service';
 
 export const AppModule = ({providers, shellRouter}: {providers:any, shellRouter: Router}) => {
    @NgModule({
@@ -37,7 +38,8 @@ export const AppModule = ({providers, shellRouter}: {providers:any, shellRouter:
       private router: Router,
       private homeBannerService: HomeBannerService,
       private networkInterceptorService: NetworkInterceptorService,
-      private topbarAnnouncementService: TopbarAnnouncementService
+      private topbarAnnouncementService: TopbarAnnouncementService,
+      private printDeliverService: PrintDeliverService
     ) {
       router.dispose(); //this prevents the router from being initialized and interfering with the shell app router
       this.networkInterceptorService.init(); //patch fetch/XHR as early as possible, before Primo issues the AlmaRequest call
@@ -59,6 +61,7 @@ export const AppModule = ({providers, shellRouter}: {providers:any, shellRouter:
 
       this.homeBannerService.init();
       this.topbarAnnouncementService.init();
+      this.printDeliverService.init();
     }
 
     /**
